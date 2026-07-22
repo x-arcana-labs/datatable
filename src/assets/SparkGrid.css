@@ -1,3 +1,77 @@
+/* ============================================
+   ARCANA THEME TOKENS
+   Every color/surface used by the grid lives in an `--arcana-*` custom
+   property. The defaults below ARE the `zinc` theme (the classic light
+   look). Themes (`arcana-theme-ocean|forest|midnight`, end of this file)
+   only override these variables.
+
+   IMPORTANT: the select/calendar panels are portaled to <body>, so they do
+   NOT inherit variables from `.spark-grid` — defaults are declared on the
+   panels too, and the components repeat the `arcana-theme-*` class on every
+   portaled panel.
+   ============================================ */
+.spark-grid,
+.arcana-select__panel,
+.arcana-cal__panel {
+    /* surfaces */
+    --arcana-bg: transparent;
+    --arcana-surface: #ffffff;
+    --arcana-surface-muted: #e9edf1;
+    --arcana-summarizer-bg: #ededed;
+    --arcana-status-bg: #fdfdfd;
+    /* borders */
+    --arcana-border: #dddddd;
+    --arcana-border-strong: #bbbbbb;
+    /* text */
+    --arcana-text: #263238;
+    --arcana-text-muted: #71717a;
+    --arcana-text-placeholder: #a1a1aa;
+    --arcana-text-disabled: #cccccc;
+    --arcana-footer-text: #333333;
+    --arcana-status-text: #53616a;
+    --arcana-ink: #18181b;
+    /* accent / focus */
+    --arcana-accent: #455a64;
+    --arcana-accent-contrast: #ffffff;
+    --arcana-focus-ring: #176b87;
+    --arcana-cell-focus: #000000;
+    /* rows */
+    --arcana-row-hover: #f5f5f5;
+    --arcana-row-checked: #e8eef5;
+    --arcana-row-focused: #e8f5e9;
+    --arcana-row-context-open: #e4ebff;
+    --arcana-header-hover: #d4dce5;
+    --arcana-pagination-hover: #dddddd;
+    /* sorting */
+    --arcana-sort-idle: #d9dfe3;
+    --arcana-sort-hover: #000000;
+    --arcana-sort-hint: #82909a;
+    /* inputs and filter controls (arcana-select__*, arcana-cal__*) */
+    --arcana-input-bg: #ffffff;
+    --arcana-input-bg-disabled: #fafafa;
+    --arcana-input-text: #09090b;
+    --arcana-input-border: #e4e4e7;
+    --arcana-input-border-base: #d6dde2;
+    --arcana-input-border-hover: #d4d4d8;
+    --arcana-input-border-active: #18181b;
+    --arcana-select-border: #dcdfe6;
+    --arcana-select-border-hover: #c0c4cc;
+    --arcana-select-focus: #409eff;
+    /* portaled panels */
+    --arcana-panel-bg: #ffffff;
+    --arcana-panel-border: #e4e4e7;
+    --arcana-item-hover: #f4f4f5;
+    --arcana-selected-bg: #18181b;
+    --arcana-selected-text: #ffffff;
+    --arcana-day-adjacent: #d4d4d8;
+    /* context/sort menus */
+    --arcana-menu-border: #d7dde1;
+    --arcana-menu-hover: #eef5f6;
+    --arcana-menu-divider: #eceff1;
+    --arcana-menu-icon: #78909c;
+    --arcana-sort-menu-active: #1467b8;
+}
+
 .spark-grid {
     font-family: "Figtree", sans-serif;
     font-optical-sizing: auto;
@@ -6,12 +80,12 @@
 }
 
 .spark-grid .context-menu-open {
-    background-color: #e4ebff !important;
+    background-color: var(--arcana-row-context-open) !important;
 }
 
 .spark-grid .spark-grid-datatable-wrapper {
-    border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-right: 1px solid var(--arcana-border);
+    border-left: 1px solid var(--arcana-border);
 }
 
 .spark-grid .spark-grid-datatable-body>.spark-grid-datatable-row {
@@ -21,28 +95,29 @@
 .spark-grid .spark-grid-datatable-body {
     z-index: 0;
     position: relative;
+    background: var(--arcana-bg);
 }
 
 .spark-grid .spark-grid-datatable-body .spark-grid-datatable-row:last-child .spark-grid-datatable-cell {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--arcana-border);
 }
 
 .spark-grid .spark-grid-datatable-row-focused .spark-grid-datatable-cell {
-    background: rgb(232, 245, 233) !important;
+    background: var(--arcana-row-focused) !important;
 }
 
 .spark-grid .spark-grid-datatable-row-checked .spark-grid-datatable-cell {
-    background: rgb(232, 238, 245) !important;
+    background: var(--arcana-row-checked) !important;
 }
 
 .spark-grid .spark-grid-datatable-cell-focused {
-    border: 1px solid black !important;
+    border: 1px solid var(--arcana-cell-focus) !important;
 }
 
 .spark-grid .spark-grid-datatable-cell {
     border: 1px solid transparent;
-    border-top: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-top: 1px solid var(--arcana-border);
+    border-left: 1px solid var(--arcana-border);
     border-collapse: collapse;
     position: relative;
     display: flex;
@@ -69,7 +144,7 @@
 }
 
 .spark-grid .spark-grid-datatable-cell:last-child {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid var(--arcana-border);
 }
 
 .spark-grid .spark-grid-datatable-cell .cell-has-comment {
@@ -89,9 +164,9 @@
     flex-direction: row;
     align-items: center;
     padding: 5px 10px;
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
-    background: #e9edf1;
+    border-bottom: 1px solid var(--arcana-border);
+    border-top: 1px solid var(--arcana-border);
+    background: var(--arcana-surface-muted);
     font-size: 12px;
 }
 
@@ -100,7 +175,7 @@
 }
 
 .spark-grid .spark-grid-datatable-footer .spark-grid-pages ul li:not(.current):hover button:enabled {
-    background-color: #ddd !important;
+    background-color: var(--arcana-pagination-hover) !important;
 }
 
 .spark-grid .spark-grid-datatable-footer>* {
@@ -126,24 +201,24 @@
     text-decoration: none;
     background: transparent;
     cursor: pointer;
-    color: #333;
+    color: var(--arcana-footer-text);
     border: 1px solid transparent;
     border-radius: 3px;
 }
 
 .spark-grid .spark-grid-datatable-footer ul li>button[disabled] {
-    color: #ccc;
+    color: var(--arcana-text-disabled);
     cursor: default;
 }
 
 .spark-grid .spark-grid-datatable-footer ul li.current>button {
-    color: #fff;
-    background-color: #455a64;
+    color: var(--arcana-accent-contrast);
+    background-color: var(--arcana-accent);
     cursor: default;
 }
 
 .spark-grid .spark-grid-datatable-footer ul li:not(.current):hover>button:not([disabled]) {
-    background-color: #f5f5f5;
+    background-color: var(--arcana-row-hover);
 }
 
 .spark-grid .spark-grid-datatable-search-row {
@@ -152,10 +227,10 @@
 }
 
 .spark-grid .spark-grid-datatable-search-row .spark-grid-datatable-search-row-cell {
-    background: white;
+    background: var(--arcana-surface);
     border: 1px solid transparent;
-    border-top: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-top: 1px solid var(--arcana-border);
+    border-left: 1px solid var(--arcana-border);
     border-collapse: collapse;
     padding: 10px;
 }
@@ -170,7 +245,7 @@
 }
 
 .spark-grid .spark-grid-datatable-search-row .spark-grid-datatable-search-row-cell:last-child {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid var(--arcana-border);
 }
 
 .spark-grid .spark-grid-datatable-search-row .has-feedback.has-feedback-left select,
@@ -182,20 +257,55 @@
 .spark-grid .spark-grid-datatable-select {
     width: 100%;
     padding: 6px 8px;
-    border: 1px solid #dcdfe6;
+    border: 1px solid var(--arcana-select-border);
     border-radius: 4px;
-    background: white;
+    background: var(--arcana-input-bg);
     font-size: 12px;
     cursor: pointer;
 }
 
 .spark-grid .spark-grid-datatable-select:hover {
-    border-color: #c0c4cc;
+    border-color: var(--arcana-select-border-hover);
 }
 
 .spark-grid .spark-grid-datatable-select:focus {
     outline: none;
-    border-color: #409eff;
+    border-color: var(--arcana-select-focus);
+}
+
+.spark-grid .spark-grid-pages {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.spark-grid .spark-grid__per-page {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.spark-grid .spark-grid__per-page .spark-grid-datatable-select {
+    width: auto;
+    min-width: 4rem;
+    max-width: max-content;
+    flex: 0 0 auto;
+}
+
+.spark-grid .spark-grid__pagination-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.spark-grid .spark-grid__info,
+.spark-grid .spark-grid-selected-rows {
+    white-space: nowrap;
 }
 
 .spark-grid .input-wrapper {
@@ -211,22 +321,22 @@
 }
 
 .spark-grid .spark-grid-datatable-header .spark-grid-datatable-header-cell {
-    border-top: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-top: 1px solid var(--arcana-border);
+    border-left: 1px solid var(--arcana-border);
     border-right: 1px solid transparent;
     border-collapse: collapse;
     position: relative;
     display: flex;
     align-items: center;
-    background: #e9edf1;
+    background: var(--arcana-surface-muted);
     font-weight: 600;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px solid var(--arcana-border-strong);
     font-size: 12px;
     padding: 8px 10px;
 }
 
 .spark-grid .spark-grid-datatable-header .spark-grid-datatable-header-cell .fa-solid.fa-sort {
-    color: #d9dfe3;
+    color: var(--arcana-sort-idle);
 }
 
 .spark-grid .spark-grid-datatable-header .spark-grid-datatable-header-cell.spark-grid-datatable-header-order {
@@ -234,11 +344,11 @@
 }
 
 .spark-grid .spark-grid-datatable-header .spark-grid-datatable-header-cell.spark-grid-datatable-header-order:hover {
-    background: #d4dce5;
+    background: var(--arcana-header-hover);
 }
 
 .spark-grid .spark-grid-datatable-header .spark-grid-datatable-header-cell.spark-grid-datatable-header-order:hover .fa-solid.fa-sort {
-    color: black !important;
+    color: var(--arcana-sort-hover) !important;
 }
 
 .spark-grid .spark-grid-datatable-header .spark-grid-datatable-header-cell.spark-grid-datatable-cell-center-alignment {
@@ -258,18 +368,18 @@
 }
 
 .spark-grid .spark-grid-datatable-header .spark-grid-datatable-header-cell:last-child {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid var(--arcana-border);
 }
 
 .spark-grid .spark-grid-datatable-summarizer-cell {
-    border-top: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-top: 1px solid var(--arcana-border);
+    border-left: 1px solid var(--arcana-border);
     border-collapse: collapse;
     display: flex;
     align-items: center;
-    background: #ededed;
+    background: var(--arcana-summarizer-bg);
     font-weight: 600;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px solid var(--arcana-border-strong);
 }
 
 .spark-grid .spark-grid-datatable-summarizer-cell.spark-grid-datatable-cell-center-alignment {
@@ -289,7 +399,7 @@
 }
 
 .spark-grid .spark-grid-datatable-summarizer-cell:last-child {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid var(--arcana-border);
 }
 
 .spark-grid .spark-grid-datatable-header-sticky {
@@ -549,8 +659,8 @@
    ============================================ */
 
 .spark-grid.grid-wrapper {
-    border-right: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-right: 1px solid var(--arcana-border);
+    border-left: 1px solid var(--arcana-border);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
 }
@@ -559,6 +669,7 @@
 .spark-grid .grid-body {
     z-index: 0;
     position: relative;
+    background: var(--arcana-bg);
 }
 
 .spark-grid .grid-body>.grid-row {
@@ -567,27 +678,27 @@
 
 .spark-grid .grid-body .grid-row:last-child .grid-cell,
 .spark-grid .grid-body .grid-row:last-child .spark-grid-datatable-cell {
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid var(--arcana-border);
 }
 
 .spark-grid .grid-row-focused .grid-cell,
 .spark-grid .grid-row-focused .spark-grid-datatable-cell {
-    background: rgb(232, 245, 233) !important;
+    background: var(--arcana-row-focused) !important;
 }
 
 .spark-grid .grid-row-checked .grid-cell,
 .spark-grid .grid-row-checked .spark-grid-datatable-cell {
-    background: rgb(232, 238, 245) !important;
+    background: var(--arcana-row-checked) !important;
 }
 
 .spark-grid .grid-cell-focused {
-    border: 1px solid black !important;
+    border: 1px solid var(--arcana-cell-focus) !important;
 }
 
 .spark-grid .grid-cell {
     border: 1px solid transparent;
-    border-top: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-top: 1px solid var(--arcana-border);
+    border-left: 1px solid var(--arcana-border);
     border-collapse: collapse;
     position: relative;
     display: flex;
@@ -617,7 +728,7 @@
 }
 
 .spark-grid .grid-cell:last-child {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid var(--arcana-border);
 }
 
 .spark-grid .grid-cell .cell-has-comment {
@@ -637,9 +748,9 @@
     flex-direction: row;
     align-items: center;
     padding: 5px 10px;
-    border-bottom: 1px solid #ddd;
-    border-top: 1px solid #ddd;
-    background: #e9edf1;
+    border-bottom: 1px solid var(--arcana-border);
+    border-top: 1px solid var(--arcana-border);
+    background: var(--arcana-surface-muted);
     font-size: 12px;
 }
 
@@ -648,7 +759,7 @@
 }
 
 .spark-grid .grid-footer .spark-grid-pages ul li:not(.current):hover button:enabled {
-    background-color: #ddd !important;
+    background-color: var(--arcana-pagination-hover) !important;
 }
 
 .spark-grid .grid-footer>* {
@@ -674,24 +785,24 @@
     text-decoration: none;
     background: transparent;
     cursor: pointer;
-    color: #333;
+    color: var(--arcana-footer-text);
     border: 1px solid transparent;
     border-radius: 3px;
 }
 
 .spark-grid .grid-footer ul li>button[disabled] {
-    color: #ccc;
+    color: var(--arcana-text-disabled);
     cursor: default;
 }
 
 .spark-grid .grid-footer ul li.current>button {
-    color: #fff;
-    background-color: #455a64;
+    color: var(--arcana-accent-contrast);
+    background-color: var(--arcana-accent);
     cursor: default;
 }
 
 .spark-grid .grid-footer ul li:not(.current):hover>button:not([disabled]) {
-    background-color: #f5f5f5;
+    background-color: var(--arcana-row-hover);
 }
 
 .spark-grid .grid-search-row {
@@ -701,10 +812,10 @@
 
 .spark-grid .grid-search-row .grid-search-row-cell,
 .spark-grid .grid-search-row .spark-grid-datatable-header-cell {
-    background: white;
+    background: var(--arcana-surface);
     border: 1px solid transparent;
-    border-top: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-top: 1px solid var(--arcana-border);
+    border-left: 1px solid var(--arcana-border);
     border-collapse: collapse;
     padding: 10px;
 }
@@ -723,7 +834,7 @@
 
 .spark-grid .grid-search-row .grid-search-row-cell:last-child,
 .spark-grid .grid-search-row .spark-grid-datatable-header-cell:last-child {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid var(--arcana-border);
 }
 
 .spark-grid .grid-search-row .has-feedback.has-feedback-left select,
@@ -737,22 +848,22 @@
 }
 
 .spark-grid .grid-header .grid-header-cell {
-    border-top: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-top: 1px solid var(--arcana-border);
+    border-left: 1px solid var(--arcana-border);
     border-right: 1px solid transparent;
     border-collapse: collapse;
     position: relative;
     display: flex;
     align-items: center;
-    background: #e9edf1;
+    background: var(--arcana-surface-muted);
     font-weight: 600;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px solid var(--arcana-border-strong);
     font-size: 12px;
     padding: 8px 10px;
 }
 
 .spark-grid .grid-header .grid-header-cell .fa-solid.fa-sort {
-    color: #d9dfe3;
+    color: var(--arcana-sort-idle);
 }
 
 .spark-grid .grid-header .grid-header-cell.grid-header-order {
@@ -760,11 +871,11 @@
 }
 
 .spark-grid .grid-header .grid-header-cell.grid-header-order:hover {
-    background: #d4dce5;
+    background: var(--arcana-header-hover);
 }
 
 .spark-grid .grid-header .grid-header-cell.grid-header-order:hover .fa-solid.fa-sort {
-    color: black !important;
+    color: var(--arcana-sort-hover) !important;
 }
 
 .spark-grid .grid-header .grid-header-cell.grid-cell-center-alignment {
@@ -796,7 +907,7 @@
 }
 
 .spark-grid .grid-header .grid-header-cell:last-child {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid var(--arcana-border);
 }
 
 .spark-grid .grid-summarizer {
@@ -804,14 +915,15 @@
 }
 
 .spark-grid .grid-summarizer-cell {
-    border-top: 1px solid #ddd;
-    border-left: 1px solid #ddd;
+    border-top: 1px solid var(--arcana-border);
+    border-left: 1px solid var(--arcana-border);
     border-collapse: collapse;
     display: flex;
     align-items: center;
-    background: #ededed;
+    background: var(--arcana-summarizer-bg);
     font-weight: 600;
-    border-bottom: 1px solid #bbb;
+    border-bottom: 1px solid var(--arcana-border-strong);
+    padding: 8px 10px;
 }
 
 .spark-grid .grid-summarizer-cell.grid-cell-center-alignment,
@@ -834,7 +946,7 @@
 }
 
 .spark-grid .grid-summarizer-cell:last-child {
-    border-right: 1px solid #ddd;
+    border-right: 1px solid var(--arcana-border);
 }
 
 .spark-grid .grid-header-sticky {
@@ -850,6 +962,12 @@
 }
 
 @media screen and (max-width: 768px) {
+    .spark-grid-responsive-vertical .spark-grid__pagination-group {
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-left: 0;
+    }
+
     .spark-grid-responsive-vertical .grid-footer {
         flex-direction: column;
         align-items: stretch;
@@ -891,10 +1009,10 @@
     .spark-grid-responsive-vertical .grid-row,
     .spark-grid-responsive-vertical .spark-grid-datatable-row {
         flex-wrap: wrap;
-        border: 1px solid #ddd;
+        border: 1px solid var(--arcana-border);
         border-radius: 8px;
         overflow: hidden;
-        background: #fff;
+        background: var(--arcana-surface);
     }
 
     .spark-grid-responsive-vertical .spark-grid-datatable-row-action-bar {
@@ -1005,6 +1123,253 @@
     overflow: hidden;
 }
 
+/* ============================================
+   EXPANDABLE ROWS
+   Chevron column (`.grid-expand-cell`) + full-width detail area
+   (`.grid-detail-row`). Everything runs on `--arcana-*` tokens, so the four
+   presets (including midnight) are covered automatically.
+   ============================================ */
+.spark-grid .grid-expand-cell {
+    justify-content: center;
+}
+
+.spark-grid .grid-expand-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    color: var(--arcana-text-muted);
+    cursor: pointer;
+    transition: background-color 100ms ease, color 100ms ease;
+}
+
+.spark-grid .grid-expand-toggle:hover {
+    background: var(--arcana-item-hover);
+    color: var(--arcana-ink);
+}
+
+.spark-grid .grid-expand-toggle svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    transition: transform 150ms ease;
+}
+
+.spark-grid .grid-expand-toggle.is-open svg {
+    transform: rotate(90deg);
+}
+
+.spark-grid .grid-detail-row {
+    display: flex;
+    width: 100%;
+}
+
+.spark-grid .grid-detail-cell {
+    flex: 1;
+    min-width: 0;
+    padding: 12px 14px;
+    border-top: 1px solid var(--arcana-border);
+    background: var(--arcana-surface-muted);
+    color: var(--arcana-text);
+    font-size: 12px;
+}
+
+.spark-grid .grid-body > .grid-detail-row:last-child .grid-detail-cell {
+    border-bottom: 1px solid var(--arcana-border);
+}
+
+.spark-grid .grid-detail-loading {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--arcana-text-muted);
+    font-size: 12px;
+}
+
+.spark-grid .grid-detail-spinner {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border: 2px solid var(--arcana-border-strong);
+    border-top-color: var(--arcana-accent);
+    animation: arcana-detail-spin 700ms linear infinite;
+}
+
+@keyframes arcana-detail-spin {
+    to { transform: rotate(360deg); }
+}
+
+.spark-grid .grid-detail-error {
+    color: var(--arcana-text-muted);
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* VERTICAL_RECORD: the detail area becomes a full-width block right below
+   the row card, without breaking the card layout. */
+@media screen and (max-width: 768px) {
+    .spark-grid-responsive-vertical .grid-detail-row {
+        width: 100%;
+        margin-top: -6px;
+    }
+
+    .spark-grid-responsive-vertical .grid-detail-cell {
+        border: 1px solid var(--arcana-border);
+        border-radius: 8px;
+    }
+
+    .spark-grid-responsive-vertical .grid-row .grid-expand-cell.spark-grid-selection-cell {
+        border-bottom: 1px solid var(--arcana-border);
+        background: var(--arcana-surface-muted);
+    }
+}
+
+.spark-grid .arcana-grid-status,
+.spark-grid .arcana-grid-error {
+    width: 100%;
+    padding: 48px 20px;
+    border-top: 1px solid var(--arcana-border);
+    background: var(--arcana-status-bg);
+    color: var(--arcana-status-text);
+    font-size: 13px;
+    text-align: center;
+}
+
+.spark-grid .arcana-grid-error {
+    padding: 10px 14px;
+    border: 1px solid #fecaca;
+    background: #fff1f2;
+    color: #9f1239;
+    text-align: left;
+}
+
+.spark-grid .arcana-sort {
+    margin-left: auto;
+    padding-left: 8px;
+    color: var(--arcana-sort-hint);
+    font-size: 12px;
+}
+
+.spark-grid .spark-grid-datatable-input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 30px;
+    padding: 5px 9px;
+    border: 1px solid var(--arcana-input-border-base);
+    border-radius: 4px;
+    background: var(--arcana-input-bg);
+    color: var(--arcana-text);
+    font: inherit;
+}
+
+.spark-grid .spark-grid-datatable-input:focus,
+.spark-grid .spark-grid-datatable-select:focus,
+.spark-grid button:focus-visible {
+    outline: 2px solid var(--arcana-focus-ring);
+    outline-offset: 2px;
+}
+
+.spark-grid .arcana-context-menu,
+.arcana-context-menu {
+    position: fixed;
+    z-index: 10000;
+    display: grid;
+    min-width: 180px;
+    overflow: hidden;
+    border: 1px solid var(--arcana-menu-border, #d7dde1);
+    border-radius: 8px;
+    background: var(--arcana-panel-bg, #fff);
+    box-shadow: 0 16px 40px rgba(22, 34, 43, .18);
+}
+
+.arcana-context-menu button {
+    padding: 9px 12px;
+    border: 0;
+    background: transparent;
+    color: var(--arcana-text, #263238);
+    text-align: left;
+    cursor: pointer;
+}
+
+.arcana-context-menu button:hover { background: var(--arcana-menu-hover, #eef5f6); }
+
+/* Checkboxes internos do grid — estilo shadcn (temável via tokens) */
+.spark-grid input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    flex: 0 0 auto;
+    margin: 0;
+    border: 1px solid var(--arcana-border);
+    border-radius: 4px;
+    background-color: var(--arcana-surface);
+    cursor: pointer;
+    vertical-align: middle;
+    transition: background-color .12s, border-color .12s;
+}
+.spark-grid input[type="checkbox"]:hover:not(:disabled) {
+    border-color: var(--arcana-accent);
+}
+.spark-grid input[type="checkbox"]:checked {
+    border-color: var(--arcana-accent);
+    background-color: var(--arcana-accent);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.5 8.5l3 3 6-7'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px 12px;
+}
+.spark-grid input[type="checkbox"]:focus-visible {
+    outline: 2px solid var(--arcana-accent);
+    outline-offset: 2px;
+}
+.spark-grid input[type="checkbox"]:disabled {
+    opacity: .45;
+    cursor: not-allowed;
+}
+
+
+.arcana-sort-menu {
+    min-width: 168px;
+}
+
+.arcana-sort-menu button {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 13px;
+}
+
+.arcana-sort-menu button svg {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 auto;
+    fill: currentColor;
+    color: var(--arcana-menu-icon, #78909c);
+}
+
+.arcana-sort-menu button.is-active {
+    color: var(--arcana-sort-menu-active, #1467b8);
+    font-weight: 600;
+}
+
+.arcana-sort-menu button.is-active svg { color: var(--arcana-sort-menu-active, #1467b8); }
+
+.arcana-sort-menu .arcana-sort-menu__clear {
+    border-top: 1px solid var(--arcana-menu-divider, #eceff1);
+    color: #9f1239;
+}
+
+.arcana-sort-menu .arcana-sort-menu__clear svg { color: #9f1239; }
+
 @media (hover: none) and (pointer: coarse) {
     .spark-grid .grid-footer ul li>button {
         min-width: 44px;
@@ -1018,4 +1383,736 @@
     .spark-grid .grid-cell {
         padding: 10px 8px;
     }
+}
+
+/* ============================================
+   ARCANA FILTER CONTROLS — shadcn-style (zinc)
+   Panels are teleported/portaled to <body>, so their rules are NOT
+   nested under .spark-grid. Classes are prefixed `arcana-` to avoid
+   clashing with host apps that already ship shadcn-like classes.
+   ============================================ */
+
+/* ── Free-text filter input: align the native input with the zinc theme ── */
+.spark-grid .grid-search-row .spark-grid-datatable-input {
+    border-color: var(--arcana-input-border);
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--arcana-input-text);
+    transition: border-color 150ms ease;
+}
+
+.spark-grid .grid-search-row .spark-grid-datatable-input::placeholder {
+    color: var(--arcana-text-placeholder);
+}
+
+.spark-grid .grid-search-row .spark-grid-datatable-input:hover:not(:disabled) {
+    border-color: var(--arcana-input-border-hover);
+}
+
+.spark-grid .grid-search-row .spark-grid-datatable-input:focus {
+    outline: none;
+    border-color: var(--arcana-input-border-active);
+}
+
+.spark-grid .grid-search-row .spark-grid-datatable-input:disabled {
+    background: var(--arcana-input-bg-disabled);
+    color: var(--arcana-text-placeholder);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* ═════════════════════════════════════════════════
+   ARCANA SELECT — trigger
+   ═════════════════════════════════════════════════ */
+.arcana-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    font-family: inherit;
+}
+
+.arcana-select__trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    width: 100%;
+    min-height: 30px;
+    padding: 4px 9px;
+    background: var(--arcana-input-bg);
+    color: var(--arcana-input-text);
+    border: 1px solid var(--arcana-input-border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 150ms ease, background-color 150ms ease;
+    outline: none;
+    box-shadow: none;
+}
+
+.arcana-select__trigger:hover:not(:disabled) {
+    border-color: var(--arcana-input-border-hover);
+}
+
+.arcana-select__trigger:focus-visible,
+.arcana-select__trigger--open,
+.arcana-select__trigger--open:hover {
+    border-color: var(--arcana-input-border-active);
+    outline: none;
+}
+
+.arcana-select__trigger:disabled {
+    background: var(--arcana-input-bg-disabled);
+    color: var(--arcana-text-placeholder);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.arcana-select__label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.arcana-select__label--placeholder {
+    color: var(--arcana-text-placeholder);
+}
+
+.arcana-select__caret {
+    flex-shrink: 0;
+    color: var(--arcana-text-muted);
+    transition: transform 200ms ease, color 150ms ease;
+}
+
+.arcana-select__trigger--open .arcana-select__caret,
+.arcana-select__caret.is-open {
+    transform: rotate(180deg);
+    color: var(--arcana-ink);
+}
+
+/* Clear (×): only visible while hovering the trigger; replaces the caret */
+.arcana-select__clear {
+    flex-shrink: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    color: var(--arcana-text-muted);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: color 100ms ease, background-color 100ms ease;
+}
+
+.arcana-select__clear:hover {
+    color: var(--arcana-ink);
+    background: var(--arcana-item-hover);
+}
+
+.arcana-select__trigger--has-clear:hover .arcana-select__clear {
+    display: flex;
+}
+
+.arcana-select__trigger--has-clear:hover .arcana-select__caret {
+    display: none;
+}
+
+/* ═════════════════════════════════════════════════
+   ARCANA SELECT — panel (portaled to <body>)
+   ═════════════════════════════════════════════════ */
+.arcana-select__panel {
+    z-index: 10100;
+    background: var(--arcana-panel-bg);
+    border: 1px solid var(--arcana-panel-border);
+    border-radius: 8px;
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        0 2px 4px rgba(0, 0, 0, 0.04);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 4px;
+    box-sizing: border-box;
+    font-family: inherit;
+    outline: none;
+}
+
+.arcana-select__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.arcana-select__search {
+    position: sticky;
+    top: -4px;
+    z-index: 1;
+    margin: -4px -4px 4px;
+    padding: 8px;
+    background: var(--arcana-panel-bg);
+    border-bottom: 1px solid var(--arcana-panel-border);
+}
+
+.arcana-select__search-icon {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--arcana-text-muted);
+    pointer-events: none;
+}
+
+.arcana-select__search-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 5px 10px 5px 32px;
+    background: var(--arcana-input-bg);
+    color: var(--arcana-input-text);
+    border: 1px solid var(--arcana-input-border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12.5px;
+    line-height: 1.4;
+    outline: none;
+    transition: border-color 150ms ease;
+}
+
+.arcana-select__search-input::placeholder {
+    color: var(--arcana-text-placeholder);
+}
+
+.arcana-select__search-input:focus {
+    border-color: var(--arcana-input-border-active);
+}
+
+.arcana-select__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 7px 9px;
+    border-radius: 6px;
+    font-size: 12.5px;
+    color: var(--arcana-ink);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 100ms ease, color 100ms ease;
+    line-height: 1.4;
+}
+
+.arcana-select__item:hover,
+.arcana-select__item.is-highlighted {
+    background: var(--arcana-item-hover);
+    color: var(--arcana-input-text);
+}
+
+/* shadcn-style: selected does NOT change bg, only shows the checkmark */
+.arcana-select__item.is-selected {
+    background: transparent;
+    color: var(--arcana-input-text);
+    font-weight: 500;
+}
+
+.arcana-select__item.is-selected.is-highlighted,
+.arcana-select__item.is-selected:hover {
+    background: var(--arcana-item-hover);
+}
+
+.arcana-select__item-label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.arcana-select__item-check {
+    flex-shrink: 0;
+    color: var(--arcana-input-text);
+}
+
+.arcana-select__empty {
+    padding: 14px 10px;
+    text-align: center;
+    color: var(--arcana-text-muted);
+    font-size: 12px;
+    font-style: italic;
+}
+
+/* ═════════════════════════════════════════════════
+   ARCANA CALENDAR — input (DATE / DATE_MONTH / DATE_RANGE)
+   ═════════════════════════════════════════════════ */
+.arcana-cal {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    font-family: inherit;
+}
+
+.arcana-cal__input {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+    min-height: 30px;
+    padding: 4px 9px;
+    background: var(--arcana-input-bg);
+    color: var(--arcana-input-text);
+    border: 1px solid var(--arcana-input-border);
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 150ms ease, background-color 150ms ease;
+    outline: none;
+    box-shadow: none;
+}
+
+.arcana-cal__input:hover:not(:disabled) {
+    border-color: var(--arcana-input-border-hover);
+}
+
+.arcana-cal__input:focus-visible,
+.arcana-cal__input--open,
+.arcana-cal__input--open:hover {
+    border-color: var(--arcana-input-border-active);
+    outline: none;
+}
+
+.arcana-cal__input:disabled {
+    background: var(--arcana-input-bg-disabled);
+    color: var(--arcana-text-placeholder);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+.arcana-cal__input-icon {
+    flex-shrink: 0;
+    color: var(--arcana-text-muted);
+    transition: color 150ms ease;
+}
+
+.arcana-cal__input--open .arcana-cal__input-icon {
+    color: var(--arcana-ink);
+}
+
+.arcana-cal__input:disabled .arcana-cal__input-icon {
+    color: var(--arcana-text-placeholder);
+}
+
+.arcana-cal__input-label {
+    flex: 1 1 auto;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.arcana-cal__input-label--placeholder {
+    color: var(--arcana-text-placeholder);
+}
+
+.arcana-cal__clear {
+    flex-shrink: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    color: var(--arcana-text-muted);
+    cursor: pointer;
+    border-radius: 4px;
+    transition: color 100ms ease, background-color 100ms ease;
+}
+
+.arcana-cal__clear:hover {
+    color: var(--arcana-ink);
+    background: var(--arcana-item-hover);
+}
+
+.arcana-cal__input--has-clear:hover .arcana-cal__clear {
+    display: flex;
+}
+
+/* ═════════════════════════════════════════════════
+   ARCANA CALENDAR — panel (portaled to <body>)
+   ═════════════════════════════════════════════════ */
+.arcana-cal__panel {
+    position: fixed;
+    z-index: 10100;
+    background: var(--arcana-panel-bg);
+    border: 1px solid var(--arcana-panel-border);
+    border-radius: 8px;
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.06),
+        0 2px 4px rgba(0, 0, 0, 0.04);
+    padding: 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+    outline: none;
+}
+
+.arcana-cal__panels {
+    display: flex;
+    gap: 14px;
+}
+
+.arcana-cal__panel--range .arcana-cal__month-panel + .arcana-cal__month-panel {
+    border-left: 1px solid var(--arcana-item-hover);
+    padding-left: 14px;
+}
+
+.arcana-cal__header {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    margin-bottom: 6px;
+}
+
+.arcana-cal__title {
+    flex: 1 1 auto;
+    text-align: center;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--arcana-ink);
+    white-space: nowrap;
+}
+
+.arcana-cal__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    color: var(--arcana-text-muted);
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 100ms ease, color 100ms ease;
+}
+
+.arcana-cal__nav:hover {
+    background: var(--arcana-item-hover);
+    color: var(--arcana-ink);
+}
+
+/* Keeps range titles centered where the inner nav buttons are omitted */
+.arcana-cal__nav-spacer {
+    flex-shrink: 0;
+    width: 50px;
+}
+
+.arcana-cal__weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+    margin-bottom: 2px;
+}
+
+.arcana-cal__weekday {
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--arcana-text-muted);
+}
+
+.arcana-cal__grid {
+    display: grid;
+    grid-template-columns: repeat(7, 32px);
+}
+
+.arcana-cal__day {
+    width: 32px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    color: var(--arcana-ink);
+    cursor: pointer;
+    transition: background-color 100ms ease, color 100ms ease;
+}
+
+.arcana-cal__day:hover {
+    background: var(--arcana-item-hover);
+}
+
+.arcana-cal__day--adjacent {
+    color: var(--arcana-day-adjacent);
+}
+
+/* Today: subtle ink outline (Element Plus-style accent, zinc palette) */
+.arcana-cal__day--today {
+    box-shadow: inset 0 0 0 1px var(--arcana-selected-bg);
+    font-weight: 600;
+}
+
+/* Range preview/committed band */
+.arcana-cal__day--in-range {
+    background: var(--arcana-item-hover);
+    border-radius: 0;
+}
+
+.arcana-cal__day--selected,
+.arcana-cal__day--range-start,
+.arcana-cal__day--range-end {
+    background: var(--arcana-selected-bg);
+    color: var(--arcana-selected-text);
+    font-weight: 500;
+}
+
+.arcana-cal__day--selected:hover,
+.arcana-cal__day--range-start:hover,
+.arcana-cal__day--range-end:hover {
+    background: var(--arcana-selected-bg);
+    color: var(--arcana-selected-text);
+}
+
+.arcana-cal__day--range-start {
+    border-radius: 6px 0 0 6px;
+}
+
+.arcana-cal__day--range-end {
+    border-radius: 0 6px 6px 0;
+}
+
+.arcana-cal__day--range-start.arcana-cal__day--range-end {
+    border-radius: 6px;
+}
+
+/* Month (4×3) panel — DATE_MONTH */
+.arcana-cal__months {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+    width: 224px;
+}
+
+.arcana-cal__month {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    border-radius: 6px;
+    font-family: inherit;
+    font-size: 12px;
+    color: var(--arcana-ink);
+    cursor: pointer;
+    transition: background-color 100ms ease, color 100ms ease;
+}
+
+.arcana-cal__month:hover {
+    background: var(--arcana-item-hover);
+}
+
+.arcana-cal__month--today {
+    box-shadow: inset 0 0 0 1px var(--arcana-selected-bg);
+    font-weight: 600;
+}
+
+.arcana-cal__month--selected,
+.arcana-cal__month--selected:hover {
+    background: var(--arcana-selected-bg);
+    color: var(--arcana-selected-text);
+    font-weight: 500;
+}
+
+/* ============================================
+   ARCANA THEMES
+   `zinc` is the default look — it lives in the token defaults at the top of
+   this file, so `arcana-theme-zinc` needs no extra rules. Each theme below
+   only overrides the `--arcana-*` variables. The class is applied to the
+   grid root AND repeated on every portaled panel (select, calendar,
+   context/sort menus), since panels on <body> do not inherit from the grid.
+   ============================================ */
+
+.arcana-theme-ocean {
+    --arcana-bg: #ffffff;
+    --arcana-surface: #ffffff;
+    --arcana-surface-muted: #dbe8f2;
+    --arcana-summarizer-bg: #e3eef6;
+    --arcana-status-bg: #f6fafc;
+    --arcana-border: #c7d9e5;
+    --arcana-border-strong: #9fbdd0;
+    --arcana-text: #123647;
+    --arcana-text-muted: #557a8e;
+    --arcana-text-placeholder: #8aa9ba;
+    --arcana-text-disabled: #b8cdd9;
+    --arcana-footer-text: #123647;
+    --arcana-status-text: #557a8e;
+    --arcana-ink: #0f4c63;
+    --arcana-accent: #0f5e79;
+    --arcana-accent-contrast: #ffffff;
+    --arcana-focus-ring: #0f5e79;
+    --arcana-cell-focus: #0f5e79;
+    --arcana-row-hover: #eef5fa;
+    --arcana-row-checked: #d3e7f5;
+    --arcana-row-focused: #d9eef4;
+    --arcana-row-context-open: #cfe5f4;
+    --arcana-header-hover: #cadeed;
+    --arcana-pagination-hover: #cadeed;
+    --arcana-sort-idle: #b3cddd;
+    --arcana-sort-hover: #0f5e79;
+    --arcana-sort-hint: #6e93a7;
+    --arcana-input-bg: #ffffff;
+    --arcana-input-bg-disabled: #f2f7fa;
+    --arcana-input-text: #123647;
+    --arcana-input-border: #c7d9e5;
+    --arcana-input-border-base: #c7d9e5;
+    --arcana-input-border-hover: #9fbdd0;
+    --arcana-input-border-active: #0f5e79;
+    --arcana-select-border: #c7d9e5;
+    --arcana-select-border-hover: #9fbdd0;
+    --arcana-select-focus: #0f5e79;
+    --arcana-panel-bg: #ffffff;
+    --arcana-panel-border: #c7d9e5;
+    --arcana-item-hover: #e4eff6;
+    --arcana-selected-bg: #0f5e79;
+    --arcana-selected-text: #ffffff;
+    --arcana-day-adjacent: #b8cdd9;
+    --arcana-menu-border: #c7d9e5;
+    --arcana-menu-hover: #e4eff6;
+    --arcana-menu-divider: #dbe8f2;
+    --arcana-menu-icon: #557a8e;
+    --arcana-sort-menu-active: #0f5e79;
+}
+
+.arcana-theme-forest {
+    --arcana-bg: #ffffff;
+    --arcana-surface: #ffffff;
+    --arcana-surface-muted: #e0ecdf;
+    --arcana-summarizer-bg: #e8f1e7;
+    --arcana-status-bg: #f7fbf7;
+    --arcana-border: #ccdccb;
+    --arcana-border-strong: #a9c4a8;
+    --arcana-text: #1c3a2a;
+    --arcana-text-muted: #5b7a67;
+    --arcana-text-placeholder: #90ab9b;
+    --arcana-text-disabled: #bed0c4;
+    --arcana-footer-text: #1c3a2a;
+    --arcana-status-text: #5b7a67;
+    --arcana-ink: #14532d;
+    --arcana-accent: #1d6f42;
+    --arcana-accent-contrast: #ffffff;
+    --arcana-focus-ring: #1d6f42;
+    --arcana-cell-focus: #1d6f42;
+    --arcana-row-hover: #f0f7f0;
+    --arcana-row-checked: #d8ecd9;
+    --arcana-row-focused: #e0f2e2;
+    --arcana-row-context-open: #d3e9d5;
+    --arcana-header-hover: #d1e5d1;
+    --arcana-pagination-hover: #d1e5d1;
+    --arcana-sort-idle: #b7cfb9;
+    --arcana-sort-hover: #14532d;
+    --arcana-sort-hint: #6f8f7a;
+    --arcana-input-bg: #ffffff;
+    --arcana-input-bg-disabled: #f3f8f3;
+    --arcana-input-text: #1c3a2a;
+    --arcana-input-border: #ccdccb;
+    --arcana-input-border-base: #ccdccb;
+    --arcana-input-border-hover: #a9c4a8;
+    --arcana-input-border-active: #1d6f42;
+    --arcana-select-border: #ccdccb;
+    --arcana-select-border-hover: #a9c4a8;
+    --arcana-select-focus: #1d6f42;
+    --arcana-panel-bg: #ffffff;
+    --arcana-panel-border: #ccdccb;
+    --arcana-item-hover: #e7f2e8;
+    --arcana-selected-bg: #1d6f42;
+    --arcana-selected-text: #ffffff;
+    --arcana-day-adjacent: #bed0c4;
+    --arcana-menu-border: #ccdccb;
+    --arcana-menu-hover: #e7f2e8;
+    --arcana-menu-divider: #e0ecdf;
+    --arcana-menu-icon: #5b7a67;
+    --arcana-sort-menu-active: #1d6f42;
+}
+
+.arcana-theme-midnight {
+    --arcana-bg: #0f172a;
+    --arcana-surface: #0f172a;
+    --arcana-surface-muted: #1e293b;
+    --arcana-summarizer-bg: #1e293b;
+    --arcana-status-bg: #0f172a;
+    --arcana-border: #2b3a52;
+    --arcana-border-strong: #3b4d68;
+    --arcana-text: #e2e8f0;
+    --arcana-text-muted: #94a3b8;
+    --arcana-text-placeholder: #64748b;
+    --arcana-text-disabled: #475569;
+    --arcana-footer-text: #cbd5e1;
+    --arcana-status-text: #94a3b8;
+    --arcana-ink: #f1f5f9;
+    --arcana-accent: #3b82f6;
+    --arcana-accent-contrast: #ffffff;
+    --arcana-focus-ring: #60a5fa;
+    --arcana-cell-focus: #94a3b8;
+    --arcana-row-hover: #253349;
+    --arcana-row-checked: #1d3a5f;
+    --arcana-row-focused: #173733;
+    --arcana-row-context-open: #1d3a5f;
+    --arcana-header-hover: #27364f;
+    --arcana-pagination-hover: #253349;
+    --arcana-sort-idle: #475569;
+    --arcana-sort-hover: #f1f5f9;
+    --arcana-sort-hint: #64748b;
+    --arcana-input-bg: #1e293b;
+    --arcana-input-bg-disabled: #16202f;
+    --arcana-input-text: #e2e8f0;
+    --arcana-input-border: #334155;
+    --arcana-input-border-base: #334155;
+    --arcana-input-border-hover: #475569;
+    --arcana-input-border-active: #94a3b8;
+    --arcana-select-border: #334155;
+    --arcana-select-border-hover: #475569;
+    --arcana-select-focus: #60a5fa;
+    --arcana-panel-bg: #1e293b;
+    --arcana-panel-border: #334155;
+    --arcana-item-hover: #334155;
+    --arcana-selected-bg: #e2e8f0;
+    --arcana-selected-text: #0f172a;
+    --arcana-day-adjacent: #475569;
+    --arcana-menu-border: #334155;
+    --arcana-menu-hover: #334155;
+    --arcana-menu-divider: #334155;
+    --arcana-menu-icon: #94a3b8;
+    --arcana-sort-menu-active: #7dd3fc;
+}
+
+/* Themed roots/panels adopt the theme ink; zinc keeps inheriting the host
+   app text color, preserving the classic (pixel-identical) look. */
+.arcana-theme-ocean,
+.arcana-theme-forest,
+.arcana-theme-midnight {
+    color: var(--arcana-text);
+}
+
+/* Dark theme: flip native widgets (checkbox/radio/select) to dark UA colors
+   and force readable text inside native selects. */
+.arcana-theme-midnight {
+    color-scheme: dark;
+}
+
+.arcana-theme-midnight .spark-grid-datatable-select {
+    color: var(--arcana-input-text);
 }

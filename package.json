@@ -1,49 +1,146 @@
 {
-    "name": "spark-grid-vue3",
-    "version": "0.0.83",
-    "description": "",
-    "files": [
-        "src"
-    ],
-    "main": "src/index.ts",
-    "types": "src/types/index.d.ts",
-    "author": "",
-    "license": "ISC",
-    "dependencies": {
-        "vue": "^3.4.37"
+  "name": "@arcanalabs/datatable",
+  "version": "1.0.0",
+  "description": "A framework-native, typed and accessible data table for Vue 3, React, Angular and Svelte.",
+  "keywords": [
+    "datatable",
+    "data-grid",
+    "vue",
+    "vue3",
+    "react",
+    "angular",
+    "svelte",
+    "typescript"
+  ],
+  "license": "MIT",
+  "author": "Arcana Labs",
+  "homepage": "https://x-arcana-labs.github.io/datatable/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/x-arcana-labs/datatable.git"
+  },
+  "bugs": {
+    "url": "https://github.com/x-arcana-labs/datatable/issues"
+  },
+  "type": "module",
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
     },
-    "scripts": {
-        "build": "vite build && tsc --noEmit",
-        "playground": "vite --config playground/vite.config.ts",
-        "test": "vitest run"
+    "./vue": {
+      "types": "./dist/vue.d.ts",
+      "import": "./dist/vue.js",
+      "require": "./dist/vue.cjs"
     },
-    "devDependencies": {
-        "@imengyu/vue3-context-menu": "^1.4.2",
-        "@types/node": "^22.7.4",
-        "@vitejs/plugin-vue": "^5.1.4",
-        "@vue/test-utils": "^2.4.6",
-        "@vue/compiler-sfc": "^3.5.10",
-        "@vue/tsconfig": "^0.5.1",
-        "element-plus": "^2.7.0",
-        "get-value": "^3.0.1",
-        "happy-dom": "^15.10.2",
-        "mitt": "^3.0.1",
-        "playwright": "^1.49.1",
-        "rollup-plugin-typescript2": "^0.36.0",
-        "sass": "^1.79.4",
-        "sass-embedded": "^1.79.4",
-        "terser": "^5.34.1",
-        "typescript": "^5.6.2",
-        "uuid": "^10.0.0",
-        "vite": "^5.4.8",
-        "vitest": "^2.1.4"
+    "./react": {
+      "types": "./dist/react.d.ts",
+      "import": "./dist/react.js",
+      "require": "./dist/react.cjs"
     },
-    "peerDependencies": {
-        "@imengyu/vue3-context-menu": "^1.4.2",
-        "axios": "^1.7.7",
-        "element-plus": "^2.7.0",
-        "get-value": "^3.0.1",
-        "lodash": "^4.17.21",
-        "uuid": "^10.0.0"
+    "./svelte": {
+      "types": "./dist/svelte.d.ts",
+      "svelte": "./dist/svelte.js",
+      "import": "./dist/svelte.js",
+      "require": "./dist/svelte.cjs"
+    },
+    "./angular": {
+      "types": "./dist/angular/angular.d.ts",
+      "default": "./dist/angular/angular.js"
+    },
+    "./styles.css": "./dist/arcanalabs-datatable.css",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "dev": "vite --config docs/vite.config.ts",
+    "docs:dev": "vite --config docs/vite.config.ts",
+    "docs:build": "vite build --config docs/vite.config.ts",
+    "build": "vite build && npm run build:angular",
+    "typecheck": "vue-tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run typecheck && npm test && npm run build && npm run docs:build",
+    "prepublishOnly": "npm run check",
+    "release:dry": "npm pack --dry-run",
+    "build:angular": "ngc -p tsconfig.angular.json"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=17.0.0",
+    "@angular/core": ">=17.0.0",
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0",
+    "svelte": ">=5.0.0",
+    "vue": ">=3.4.0"
+  },
+  "peerDependenciesMeta": {
+    "@angular/common": {
+      "optional": true
+    },
+    "@angular/core": {
+      "optional": true
+    },
+    "react": {
+      "optional": true
+    },
+    "react-dom": {
+      "optional": true
+    },
+    "svelte": {
+      "optional": true
+    },
+    "vue": {
+      "optional": true
     }
+  },
+  "devDependencies": {
+    "@angular/common": "^21.2.18",
+    "@angular/compiler": "^21.2.18",
+    "@angular/compiler-cli": "^21.2.18",
+    "@angular/core": "^21.2.18",
+    "@angular/platform-browser": "^21.2.18",
+    "@sveltejs/vite-plugin-svelte": "^7.2.0",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/svelte": "^5.4.2",
+    "@types/node": "^26.1.1",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "^6.0.3",
+    "@vitejs/plugin-vue": "^6.0.8",
+    "@vue/compiler-sfc": "^3.5.40",
+    "@vue/test-utils": "^2.4.11",
+    "happy-dom": "^20.11.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "rxjs": "^7.8.2",
+    "sass": "^1.83.0",
+    "svelte": "^5.56.7",
+    "typescript": "^5.7.2",
+    "vite": "^8.1.5",
+    "vite-plugin-dts": "^5.0.3",
+    "vitest": "^4.1.10",
+    "vue": "^3.5.40",
+    "vue-tsc": "^3.3.7",
+    "zone.js": "^0.16.2"
+  },
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "svelte": "./dist/svelte.js"
 }

@@ -1,36 +1,28 @@
 {
-    "include": [
-        "vite.config.*",
-        "src/**/*.ts",
-        "src/**/*.d.ts",
-        "src/**/*.tsx",
-        "src/**/*.vue"
-    ],
-    "compilerOptions": {
-        "target": "ESNext",
-        "module": "ESNext",
-        "moduleResolution": "Node",
-        "strict": true,
-        "jsx": "preserve",
-        // Keeps JSX as it is, which is usually good for Vue projects with JSX
-        "esModuleInterop": true,
-        // Enables default imports from CJS modules
-        "skipLibCheck": true,
-        // Skips checking types of all declaration files, helps speed up
-        "forceConsistentCasingInFileNames": true,
-        // Prevents inconsistent casing issues
-        "declaration": true,
-        // Generates declaration files
-        "declarationDir": "dist",
-        // Specifies where declaration files should be output
-        "emitDeclarationOnly": false,
-        // Only emits the declaration files without the JavaScript output
-        "outDir": "dist",
-        "baseUrl": ".",
-        "paths": {
-            "@/*": [
-                "src/*"
-            ]
-        }
-    }
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx", "docs/src/**/*.ts", "docs/src/**/*.tsx"],
+  "exclude": ["dist", "docs/dist", "node_modules"],
+  "compilerOptions": {
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "allowImportingTsExtensions": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
+    "experimentalDecorators": true,
+    "declaration": true,
+    "declarationMap": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "dist",
+    "baseUrl": ".",
+    "paths": { "@/*": ["src/*"] },
+    "types": ["node", "vitest/globals"]
+  }
 }

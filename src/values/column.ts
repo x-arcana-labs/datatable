@@ -25,3 +25,8 @@ export const ResponsiveMode = {
 } as const;
 
 export type ResponsiveModeType = typeof ResponsiveMode[keyof typeof ResponsiveMode];
+
+export const DataMode = {
+    REMOTE: "remote",
+    DATASET: "dataset",
+} as const;
