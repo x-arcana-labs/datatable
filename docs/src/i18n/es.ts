@@ -10,6 +10,7 @@ export const es: Messages = {
     navDocs: "Docs",
     navPlayground: "Playground",
     topNavAria: "Áreas del sitio",
+    githubStars: "{count} estrellas en GitHub",
     searchPlaceholder: "Buscar en la documentación… (⌘K)",
     searchAria: "Buscar en la documentación",
     chooseFramework: "Elegir framework",

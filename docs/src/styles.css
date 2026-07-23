@@ -229,6 +229,24 @@ button { font-family: inherit; cursor: pointer; }
   font-weight: 500;
 }
 .gh-link:hover { color: var(--accent); text-decoration: none; }
+.gh-stars {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 2px;
+  padding: 2px 7px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: #f8fafc;
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.gh-stars svg { width: 12px; height: 12px; color: #f59e0b; flex: 0 0 auto; }
+.gh-link:hover .gh-stars { border-color: #c7d2fe; }
 .gh-link svg { width: 18px; height: 18px; }
 
 .menu-btn {

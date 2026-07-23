@@ -10,6 +10,7 @@ export const ja: Messages = {
     navDocs: "ドキュメント",
     navPlayground: "プレイグラウンド",
     topNavAria: "サイトのエリア",
+    githubStars: "GitHub のスター {count} 件",
     searchPlaceholder: "ドキュメントを検索… (⌘K)",
     searchAria: "ドキュメントを検索",
     chooseFramework: "フレームワークを選択",

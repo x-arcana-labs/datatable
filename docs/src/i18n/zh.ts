@@ -10,6 +10,7 @@ export const zh: Messages = {
     navDocs: "文档",
     navPlayground: "演练场",
     topNavAria: "站点区域",
+    githubStars: "GitHub 上 {count} 个星标",
     searchPlaceholder: "搜索文档…（⌘K）",
     searchAria: "搜索文档",
     chooseFramework: "选择框架",

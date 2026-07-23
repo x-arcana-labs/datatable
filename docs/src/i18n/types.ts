@@ -99,6 +99,8 @@ export interface Messages {
     navDocs: string;
     navPlayground: string;
     topNavAria: string;
+    /** aria-label of the GitHub star count; {count} placeholder. */
+    githubStars: string;
     searchPlaceholder: string;
     searchAria: string;
     chooseFramework: string;

@@ -10,6 +10,7 @@ export const ru: Messages = {
     navDocs: "Документация",
     navPlayground: "Песочница",
     topNavAria: "Разделы сайта",
+    githubStars: "{count} звёзд на GitHub",
     searchPlaceholder: "Поиск по документации… (⌘K)",
     searchAria: "Поиск по документации",
     chooseFramework: "Выбрать фреймворк",
