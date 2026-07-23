@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/src/assets/arcana-logo-light.png" alt="Arcana" width="220" />
+  <img src="docs/src/assets/arcana-logo-banner-light.png" alt="Arcana" width="520" />
 </p>
 
 <h1 align="center">@arcanalabs/datatable</h1>
