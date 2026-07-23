@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.2.1 — 2026-07-23
+
+### Correções
+- O ícone de ordenação volta a ficar alinhado à direita, no fim do cabeçalho da coluna, de forma consistente em qualquer largura ou alinhamento de coluna.
+
 ## 1.2.0 — 2026-07-23
 
 ### Alterações que exigem atenção
