@@ -99,12 +99,21 @@ export const it: Messages = {
     columns: {
       title: "Colonne",
       p1: "Ogni colonna è un oggetto <c>DataTableColumn</c> con un <c>name</c> (la chiave sulla riga) e un <c>label</c> (il testo dell'intestazione). Campi come <c>type</c> controllano la formattazione — per esempio, <c>CURRENCY</c> renderizza valori monetari — e <c>valueGetter</c> trasforma il contenuto della cella prima del rendering. Il contenuto stringa viene reso come testo sicuro ed escapato per impostazione predefinita; imposta <c>html: true</c> sulla colonna per interpretarlo come HTML, oppure restituisci un nodo nativo per contenuti ricchi.",
-      p2: "La proprietà <c>columns</c> accetta anche una funzione <c>() => DataTableColumn[]</c>, utile quando le colonne dipendono dai permessi o dallo stato dell'applicazione. Le colonne possono essere ridimensionate trascinando il bordo destro dell'intestazione — attivo per impostazione predefinita (<c>columnResizeEnabled</c>); escludi una singola colonna con <c>resizable: false</c>."
+      p2: "La proprietà <c>columns</c> accetta anche una funzione <c>() => DataTableColumn[]</c>, utile quando le colonne dipendono dai permessi o dallo stato dell'applicazione."
     },
     columnManagement: {
       title: "Riordina e blocca le colonne",
+      previewLabel: "componente reale · trascina le intestazioni e scorri orizzontalmente",
       p1: "Trascina lateralmente il corpo di un'intestazione per riordinare le colonne — una linea indicatrice mostra esattamente dove andrà la colonna. Un clic breve apre comunque il menu di ordinamento e la maniglia di ridimensionamento sul bordo destro mantiene la priorità, quindi il trascinamento non intralcia mai. Attivo per impostazione predefinita (<c>columnReorderEnabled</c>); mantieni una singola colonna fissa al suo posto con <c>reorderable: false</c>.",
       p2: "Il menu dell'intestazione (lo stesso che contiene le opzioni di ordinamento) acquisisce <i>Blocca a sinistra</i>, <i>Blocca a destra</i> e <i>Sblocca</i>. Una colonna bloccata si congela sul suo bordo e resta visibile durante lo scorrimento orizzontale — le colonne bloccate a sinistra si attaccano all'inizio, a destra alla fine, con un divisore/ombra discreto. Impostalo in anticipo con <c>pinned: 'left'</c> o <c>pinned: 'right'</c> sulla colonna, oppure cambialo a runtime dal menu; le colonne di sistema (checkbox/espansore) si congelano a sinistra e la colonna delle azioni a destra. Riordino e blocco sono disabilitati da <c>columnPinEnabled</c> e ignorati nella modalità responsive <c>VERTICAL_RECORD</c>."
+    },
+    resize: {
+      title: "Ridimensionare le colonne",
+      previewLabel: "componente reale · trascina il bordo destro di un'intestazione",
+      labelOn: "resize ATTIVO",
+      labelOff: "resize DISATTIVO",
+      p1: "Ogni intestazione porta una maniglia discreta sul bordo destro — trascinala per dare alla colonna esattamente la larghezza che vuoi. Il ridimensionamento è attivo per impostazione predefinita (<c>columnResizeEnabled: true</c>) e la maniglia mantiene la priorità sul trascinamento dell'intestazione, quindi non entra mai in conflitto con il riordino.",
+      p2: "<c>cellMinWidth</c> funge da soglia minima: nessuna colonna può essere trascinata al di sotto di essa. Spegni le maniglie per l'intera griglia con <c>columnResizeEnabled: false</c>, oppure mantieni una singola colonna a larghezza fissa con <c>resizable: false</c> nella sua definizione. Confronta le due griglie qui sotto — la prima mostra la maniglia su ogni intestazione, la seconda su nessuna:"
     },
     pagination: {
       title: "Paginazione",
@@ -133,8 +142,14 @@ export const it: Messages = {
     },
     sorting: {
       title: "Ordinamento",
-      p1: "L'ordinamento per colonna è abilitato per impostazione predefinita (<c>orderByEnabled: true</c>): un clic sull'intestazione apre un menu con <i>Crescente</i>, <i>Decrescente</i> e — quando la colonna è già ordinata — <i>Rimuovi ordinamento</i>, che riporta la griglia allo stato neutro. <b>Shift+clic</b> su un'intestazione per aggiungere quella colonna a un ordinamento su <i>più colonne</i>, alternandola tra <i>crescente → decrescente → rimossa</i> mantenendo le altre colonne ordinate; un piccolo numero di priorità (<c>1</c>, <c>2</c>, <c>3</c>…) indica l'ordine, e le intestazioni espongono <c>aria-sort</c>. In modalità <c>remote</c>, l'ordinamento corrente viaggia nei <c>params</c>; in modalità <c>dataset</c>, viene risolto in memoria.",
-      p2: "Disattivalo per colonna con <c>orderByEnabled: false</c> nella definizione della colonna, e usa <c>filterName</c> come alias del campo inviato al server. Per applicare un ordinamento da codice, usa <c>controller.applyOrderBy(orderBy)</c> — che ora accetta anche un <c>OrderBy[]</c> per un ordinamento completo su più colonne (l'indice 0 ordina per primo) — oppure <c>controller.toggleOrderBy(name, { additive })</c> per alternare una singola colonna."
+      p1: "L'ordinamento per colonna è abilitato per impostazione predefinita (<c>orderByEnabled: true</c>): un clic sull'intestazione apre un menu con <i>Crescente</i>, <i>Decrescente</i> e — quando la colonna è già ordinata — <i>Rimuovi ordinamento</i>, che riporta la griglia allo stato neutro; le intestazioni espongono <c>aria-sort</c>. In modalità <c>remote</c>, l'ordinamento corrente viaggia nei <c>params</c>; in modalità <c>dataset</c>, viene risolto in memoria.",
+      p2: "Disattivalo per colonna con <c>orderByEnabled: false</c> nella definizione della colonna, e usa <c>filterName</c> come alias del campo inviato al server. Per applicare un ordinamento da codice, usa <c>controller.applyOrderBy({ name, direction })</c> — oppure passa <c>null</c> per azzerarlo. Per combinare più colonne insieme, vedi <b>Ordinamento multi-colonna</b> subito sotto."
+    },
+    multiSort: {
+      title: "Ordinamento multi-colonna",
+      previewLabel: "componente reale · Shift+clic su un'intestazione per impilare un altro ordinamento",
+      p1: "<b>Shift+clic</b> su un'intestazione aggiunge quella colonna all'ordinamento corrente invece di sostituirlo — ogni colonna cicla tra <i>crescente → decrescente → rimossa</i> mentre le altre restano al loro posto. Un piccolo badge di priorità (<c>1</c>, <c>2</c>, <c>3</c>…) accanto alla freccia mostra l'ordine in cui le colonne si applicano. La demo qui sotto si monta già ordinata per Area (crescente) e poi Importo (decrescente) — dentro ogni area, gli importi vanno dal più alto al più basso; Shift+clic su una terza intestazione per impilare un altro livello.",
+      p2: "Da codice, <c>controller.applyOrderBy(orderBy)</c> accetta anche un <c>OrderBy[]</c> per un ordinamento completo su più colonne (l'indice 0 ordina per primo), e <c>controller.toggleOrderBy(name, { additive: true })</c> riproduce il ciclo dello Shift+clic per una colonna. In modalità <c>remote</c>, un ordinamento singolo mantiene i params classici <c>order_by[field]</c> / <c>order_by[direction]</c>; da due colonne in su diventano indicizzati — <c>order_by[0][field]</c>, <c>order_by[0][direction]</c>, <c>order_by[1][field]</c>, …"
     },
     checkbox: {
       title: "Selezione multipla",
@@ -283,8 +298,38 @@ export const it: Messages = {
           }
         },
         applyOrderBy: {
-          description: "Applica l'ordinamento e torna alla pagina 1; passare null rimuove l'ordinamento e riporta la griglia allo stato neutro.",
-          params: { orderBy: "un oggetto { name: string; direction: 'asc' | 'desc' }, oppure null per azzerare." }
+          description: "Sostituisce l'intero ordinamento e torna alla pagina 1: un singolo OrderBy mantiene il classico comportamento a colonna singola, un OrderBy[] applica un ordinamento multi-colonna completo (l'indice 0 ordina per primo), e null azzera l'ordinamento.",
+          params: { orderBy: "un oggetto { name: string; direction: 'asc' | 'desc' }, un OrderBy[] per un ordinamento multi-colonna, oppure null per azzerare." }
+        },
+        toggleOrderBy: {
+          description: "Alterna l'ordinamento di una colonna esattamente come un clic sull'intestazione e torna alla pagina 1; con additive: true riproduce lo Shift+clic, conservando le altre colonne ordinate.",
+          params: {
+            name: "nome della colonna il cui ordinamento viene alternato (asc → desc → rimosso).",
+            options: "additive: true conserva le altre colonne ordinate; senza, la colonna diventa l'unico ordinamento."
+          }
+        },
+        setColumnOrder: {
+          description: "Sostituisce per intero l'ordine effettivo delle colonne; un array vuoto ripristina l'ordine naturale della config.",
+          params: { order: "elenco dei nomi delle colonne nell'ordine desiderato; i nomi assenti finiscono in coda." }
+        },
+        moveColumn: {
+          description: "Sposta una colonna accanto a un'altra, posizionandola prima (predefinito) o dopo il target; un target null la manda in coda.",
+          params: {
+            name: "nome della colonna da spostare.",
+            targetName: "nome della colonna di riferimento, oppure null per mandare la colonna in coda.",
+            position: "se la colonna finisce prima (predefinito) o dopo il target."
+          }
+        },
+        setColumnPinned: {
+          description: "Blocca la colonna su un bordo (o la sblocca con null), sovrascrivendo il pinned della config della colonna.",
+          params: {
+            name: "nome della colonna da bloccare.",
+            pinned: "'left', 'right' oppure null per sbloccare."
+          }
+        },
+        getColumnPin: {
+          description: "Restituisce il blocco attuale della colonna ('left', 'right' o null): l'override a runtime quando presente, altrimenti il pinned della config della colonna.",
+          params: { name: "nome della colonna da consultare." }
         },
         expandRow: {
           description: "Espande la riga identificata, renderizzando l'area dei dettagli subito sotto (richiede expandableRowsEnabled). Ignorato quando la riga è già espansa o non è nella pagina corrente.",

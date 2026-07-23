@@ -99,12 +99,21 @@ export const de: Messages = {
     columns: {
       title: "Spalten",
       p1: "Jede Spalte ist ein <c>DataTableColumn</c>-Objekt mit einem <c>name</c> (dem Schlüssel in der Zeile) und einem <c>label</c> (dem Text der Kopfzeile). Felder wie <c>type</c> steuern die Formatierung — zum Beispiel rendert <c>CURRENCY</c> Geldbeträge — und <c>valueGetter</c> transformiert den Zellinhalt vor dem Rendern. String-Inhalt wird standardmäßig als sicherer, escapeter Text gerendert; setze <c>html: true</c> auf der Spalte, um ihn als HTML zu interpretieren, oder gib für reichhaltige Inhalte einen nativen Knoten zurück.",
-      p2: "Die <c>columns</c>-Eigenschaft akzeptiert auch eine Funktion <c>() => DataTableColumn[]</c>, praktisch, wenn die Spalten von Berechtigungen oder vom Anwendungszustand abhängen. Spalten lassen sich durch Ziehen der rechten Kopfzeilenkante skalieren — standardmäßig aktiv (<c>columnResizeEnabled</c>); eine einzelne Spalte nimmst du mit <c>resizable: false</c> davon aus."
+      p2: "Die <c>columns</c>-Eigenschaft akzeptiert auch eine Funktion <c>() => DataTableColumn[]</c>, praktisch, wenn die Spalten von Berechtigungen oder vom Anwendungszustand abhängen."
     },
     columnManagement: {
       title: "Spalten umordnen und anheften",
+      previewLabel: "echte Komponente · ziehe die Kopfzeilen und scrolle horizontal",
       p1: "Ziehe den Körper eines Spaltenkopfs seitwärts, um die Spalten umzuordnen — eine Einfüge-Indikatorlinie zeigt genau, wo die Spalte landet. Ein kurzer Klick öffnet weiterhin das Sortiermenü und der Ziehgriff an der rechten Kante behält Vorrang, sodass das Ziehen nie im Weg ist. Standardmäßig aktiv (<c>columnReorderEnabled</c>); halte eine einzelne Spalte mit <c>reorderable: false</c> an ihrem Platz fest.",
       p2: "Das Kopfzeilenmenü (dasselbe mit den Sortieroptionen) erhält <i>Links anheften</i>, <i>Rechts anheften</i> und <i>Lösen</i>. Eine angeheftete Spalte friert an ihrer Kante ein und bleibt beim horizontalen Scrollen sichtbar — links angeheftete Spalten kleben am Anfang, rechts angeheftete am Ende, mit einem dezenten Trenner/Schatten. Lege es vorab mit <c>pinned: 'left'</c> oder <c>pinned: 'right'</c> an der Spalte fest oder ändere es zur Laufzeit über das Menü; die Systemspalten (Checkbox/Aufklapper) frieren links ein und die Aktionsspalte rechts. Umordnen und Anheften werden durch <c>columnPinEnabled</c> deaktiviert und im responsiven Modus <c>VERTICAL_RECORD</c> ignoriert."
+    },
+    resize: {
+      title: "Spaltenbreite ändern",
+      previewLabel: "echte Komponente · ziehe die rechte Kante einer Kopfzeile",
+      labelOn: "Resize AN",
+      labelOff: "Resize AUS",
+      p1: "Jede Kopfzeile trägt an ihrer rechten Kante einen dezenten Ziehgriff — ziehe ihn, um der Spalte genau die gewünschte Breite zu geben. Das Skalieren ist standardmäßig aktiv (<c>columnResizeEnabled: true</c>), und der Griff behält Vorrang vor dem Ziehen der Kopfzeile, sodass es nie mit dem Umordnen kollidiert.",
+      p2: "<c>cellMinWidth</c> wirkt als Untergrenze: keine Spalte lässt sich schmaler ziehen. Schalte die Griffe für das ganze Grid mit <c>columnResizeEnabled: false</c> ab, oder halte eine einzelne Spalte mit <c>resizable: false</c> in ihrer Definition auf fester Breite. Vergleiche die beiden Grids unten — das erste zeigt an jeder Kopfzeile einen Ziehgriff, das zweite an keiner:"
     },
     pagination: {
       title: "Paginierung",
@@ -133,8 +142,14 @@ export const de: Messages = {
     },
     sorting: {
       title: "Sortierung",
-      p1: "Die Sortierung pro Spalte ist standardmäßig aktiviert (<c>orderByEnabled: true</c>): Ein Klick auf die Kopfzeile öffnet ein Menü mit <i>Aufsteigend</i>, <i>Absteigend</i> und — wenn die Spalte bereits sortiert ist — <i>Sortierung entfernen</i>, was das Grid in den neutralen Zustand zurückversetzt. Mit <b>Umschalt+Klick</b> auf eine Kopfzeile fügst du diese Spalte einer <i>mehrspaltigen</i> Sortierung hinzu, die sie zwischen <i>aufsteigend → absteigend → entfernt</i> durchschaltet, während die übrigen sortierten Spalten erhalten bleiben; eine kleine Prioritätsnummer (<c>1</c>, <c>2</c>, <c>3</c>…) zeigt die Reihenfolge, und die Kopfzeilen stellen <c>aria-sort</c> bereit. Im <c>remote</c>-Modus reist die aktuelle Sortierung in den <c>params</c> mit; im <c>dataset</c>-Modus wird sie im Speicher aufgelöst.",
-      p2: "Deaktiviere sie pro Spalte mit <c>orderByEnabled: false</c> in der Spaltendefinition und verwende <c>filterName</c> als Alias für das an den Server gesendete Feld. Um eine Sortierung per Code anzuwenden, nutze <c>controller.applyOrderBy(orderBy)</c> — was nun auch ein <c>OrderBy[]</c> für eine vollständige mehrspaltige Sortierung akzeptiert (Index 0 sortiert zuerst) — oder <c>controller.toggleOrderBy(name, { additive })</c>, um eine einzelne Spalte umzuschalten."
+      p1: "Die Sortierung pro Spalte ist standardmäßig aktiviert (<c>orderByEnabled: true</c>): Ein Klick auf die Kopfzeile öffnet ein Menü mit <i>Aufsteigend</i>, <i>Absteigend</i> und — wenn die Spalte bereits sortiert ist — <i>Sortierung entfernen</i>, was das Grid in den neutralen Zustand zurückversetzt; die Kopfzeilen stellen <c>aria-sort</c> bereit. Im <c>remote</c>-Modus reist die aktuelle Sortierung in den <c>params</c> mit; im <c>dataset</c>-Modus wird sie im Speicher aufgelöst.",
+      p2: "Deaktiviere sie pro Spalte mit <c>orderByEnabled: false</c> in der Spaltendefinition und verwende <c>filterName</c> als Alias für das an den Server gesendete Feld. Um eine Sortierung per Code anzuwenden, nutze <c>controller.applyOrderBy({ name, direction })</c> — oder übergib <c>null</c>, um sie zu löschen. Wie du mehrere Spalten auf einmal kombinierst, zeigt <b>Mehrspaltige Sortierung</b> direkt darunter."
+    },
+    multiSort: {
+      title: "Mehrspaltige Sortierung",
+      previewLabel: "echte Komponente · Umschalt+Klick auf eine Kopfzeile stapelt eine weitere Sortierung",
+      p1: "Mit <b>Umschalt+Klick</b> auf eine Kopfzeile fügst du diese Spalte der aktuellen Sortierung hinzu, statt sie zu ersetzen — jede Spalte durchläuft <i>aufsteigend → absteigend → entfernt</i>, während die übrigen an ihrem Platz bleiben. Ein kleines Prioritätsabzeichen (<c>1</c>, <c>2</c>, <c>3</c>…) neben dem Pfeil zeigt, in welcher Reihenfolge die Spalten greifen. Die Demo unten startet bereits sortiert nach Bereich (aufsteigend) und dann Betrag (absteigend) — innerhalb jedes Bereichs laufen die Beträge von hoch nach niedrig; Umschalt+Klick auf eine dritte Kopfzeile stapelt eine weitere Ebene.",
+      p2: "Per Code akzeptiert <c>controller.applyOrderBy(orderBy)</c> auch ein <c>OrderBy[]</c> für eine vollständige mehrspaltige Sortierung (Index 0 sortiert zuerst), und <c>controller.toggleOrderBy(name, { additive: true })</c> bildet den Umschalt+Klick-Zyklus für eine einzelne Spalte nach. Im <c>remote</c>-Modus behält eine einzelne Sortierung die klassischen Params <c>order_by[field]</c> / <c>order_by[direction]</c>; ab zwei Spalten werden sie indiziert — <c>order_by[0][field]</c>, <c>order_by[0][direction]</c>, <c>order_by[1][field]</c>, …"
     },
     checkbox: {
       title: "Mehrfachauswahl",
@@ -283,8 +298,38 @@ export const de: Messages = {
           }
         },
         applyOrderBy: {
-          description: "Wendet die Sortierung an und kehrt zu Seite 1 zurück; null entfernt die Sortierung und versetzt das Grid in den neutralen Zustand.",
-          params: { orderBy: "ein Objekt { name: string; direction: 'asc' | 'desc' } oder null zum Zurücksetzen." }
+          description: "Ersetzt die gesamte Sortierung und kehrt zu Seite 1 zurück: ein einzelnes OrderBy behält das klassische einspaltige Verhalten, ein OrderBy[] wendet eine vollständige mehrspaltige Sortierung an (Index 0 sortiert zuerst), und null löscht die Sortierung.",
+          params: { orderBy: "ein Objekt { name: string; direction: 'asc' | 'desc' }, ein OrderBy[] für eine mehrspaltige Sortierung oder null zum Zurücksetzen." }
+        },
+        toggleOrderBy: {
+          description: "Schaltet die Sortierung einer Spalte genau wie ein Klick auf den Header weiter und kehrt zu Seite 1 zurück; mit additive: true wird Umschalt+Klick nachgebildet und die übrigen sortierten Spalten bleiben erhalten.",
+          params: {
+            name: "Name der Spalte, deren Sortierung durchgeschaltet wird (asc → desc → entfernt).",
+            options: "additive: true erhält die übrigen sortierten Spalten; ohne wird die Spalte zur einzigen Sortierung."
+          }
+        },
+        setColumnOrder: {
+          description: "Ersetzt die effektive Spaltenreihenfolge komplett; ein leeres Array stellt die natürliche Reihenfolge der Config wieder her.",
+          params: { order: "Liste der Spaltennamen in der gewünschten Reihenfolge; fehlende Namen wandern ans Ende." }
+        },
+        moveColumn: {
+          description: "Verschiebt eine Spalte neben eine andere, vor (Standard) oder hinter das Ziel; ein null-Ziel schickt sie ans Ende.",
+          params: {
+            name: "Name der zu verschiebenden Spalte.",
+            targetName: "Name der Referenzspalte oder null, um die Spalte ans Ende zu schicken.",
+            position: "ob die Spalte vor (Standard) oder hinter dem Ziel landet."
+          }
+        },
+        setColumnPinned: {
+          description: "Heftet die Spalte an einen Rand (oder löst sie mit null) und überschreibt dabei das pinned aus der Spalten-Config.",
+          params: {
+            name: "Name der anzuheftenden Spalte.",
+            pinned: "'left', 'right' oder null zum Lösen."
+          }
+        },
+        getColumnPin: {
+          description: "Gibt die aktuelle Anheftung der Spalte zurück ('left', 'right' oder null): den Laufzeit-Override, falls gesetzt, sonst das pinned aus der Spalten-Config.",
+          params: { name: "Name der abzufragenden Spalte." }
         },
         expandRow: {
           description: "Klappt die identifizierte Zeile auf und rendert den Detailbereich direkt darunter (erfordert expandableRowsEnabled). Wird ignoriert, wenn die Zeile bereits aufgeklappt ist oder nicht auf der aktuellen Seite liegt.",

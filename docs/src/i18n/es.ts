@@ -99,12 +99,21 @@ export const es: Messages = {
     columns: {
       title: "Columnas",
       p1: "Cada columna es un objeto <c>DataTableColumn</c> con un <c>name</c> (la clave en la fila) y un <c>label</c> (el texto del encabezado). Campos como <c>type</c> controlan el formato — por ejemplo, <c>CURRENCY</c> renderiza valores monetarios — y <c>valueGetter</c> transforma el contenido de la celda antes de renderizar. El contenido de texto se renderiza como texto seguro y escapado por defecto; define <c>html: true</c> en la columna para interpretarlo como HTML, o devuelve un nodo nativo para contenido enriquecido.",
-      p2: "La propiedad <c>columns</c> también acepta una función <c>() => DataTableColumn[]</c>, útil cuando las columnas dependen de permisos o del estado de la aplicación. Las columnas se pueden redimensionar arrastrando el borde derecho de su encabezado — activo por defecto (<c>columnResizeEnabled</c>); exime a una columna concreta con <c>resizable: false</c>."
+      p2: "La propiedad <c>columns</c> también acepta una función <c>() => DataTableColumn[]</c>, útil cuando las columnas dependen de permisos o del estado de la aplicación."
     },
     columnManagement: {
       title: "Reordenar y fijar columnas",
+      previewLabel: "componente real · arrastra los encabezados y desplázate horizontalmente",
       p1: "Arrastra lateralmente el cuerpo de un encabezado para reordenar las columnas — una línea indicadora muestra exactamente dónde caerá la columna. Un clic corto sigue abriendo el menú de ordenación y el tirador de redimensionar del borde derecho mantiene la prioridad, así que arrastrar nunca estorba. Activo por defecto (<c>columnReorderEnabled</c>); mantén una columna fija en su lugar con <c>reorderable: false</c>.",
       p2: "El menú del encabezado (el mismo que lleva las opciones de ordenación) gana <i>Fijar a la izquierda</i>, <i>Fijar a la derecha</i> y <i>Desfijar</i>. Una columna fijada se congela en su borde y permanece visible durante el desplazamiento horizontal — las columnas fijadas a la izquierda se pegan al inicio, a la derecha al final, con un divisor/sombra sutil. Configúralo de antemano con <c>pinned: 'left'</c> o <c>pinned: 'right'</c> en la columna, o cámbialo en tiempo de ejecución desde el menú; las columnas de sistema (checkbox/expansor) se congelan a la izquierda y la columna de acciones a la derecha. Reordenar y fijar se desactivan con <c>columnPinEnabled</c> y se ignoran en el modo responsivo <c>VERTICAL_RECORD</c>."
+    },
+    resize: {
+      title: "Redimensionar columnas",
+      previewLabel: "componente real · arrastra el borde derecho de un encabezado",
+      labelOn: "resize ACTIVADO",
+      labelOff: "resize DESACTIVADO",
+      p1: "Cada encabezado lleva un tirador discreto en su borde derecho — arrástralo para darle a la columna exactamente el ancho que quieras. El redimensionado viene activo por defecto (<c>columnResizeEnabled: true</c>) y el tirador mantiene la prioridad sobre el arrastre del encabezado, así que nunca entra en conflicto con la reordenación.",
+      p2: "<c>cellMinWidth</c> actúa como suelo: ninguna columna puede arrastrarse por debajo de él. Apaga los tiradores de todo el grid con <c>columnResizeEnabled: false</c>, o mantén una columna concreta con ancho fijo usando <c>resizable: false</c> en su definición. Compara los dos grids de abajo — el primero muestra el tirador en todos los encabezados, el segundo en ninguno:"
     },
     pagination: {
       title: "Paginación",
@@ -133,8 +142,14 @@ export const es: Messages = {
     },
     sorting: {
       title: "Ordenación",
-      p1: "La ordenación por columna viene habilitada por defecto (<c>orderByEnabled: true</c>): hacer clic en el encabezado abre un menú con <i>Ascendente</i>, <i>Descendente</i> y — cuando la columna ya está ordenada — <i>Quitar ordenación</i>, que devuelve el grid a su estado neutro. <b>Mayús+clic</b> en un encabezado para añadir esa columna a una ordenación de <i>varias columnas</i>, alternándola entre <i>ascendente → descendente → quitada</i> mientras conserva las demás columnas ordenadas; un pequeño número de prioridad (<c>1</c>, <c>2</c>, <c>3</c>…) indica el orden, y los encabezados exponen <c>aria-sort</c>. En modo <c>remote</c>, la ordenación actual viaja en los <c>params</c>; en modo <c>dataset</c>, se resuelve en memoria.",
-      p2: "Desactívala por columna con <c>orderByEnabled: false</c> en la definición de la columna, y usa <c>filterName</c> como alias del campo enviado al servidor. Para aplicar una ordenación desde código, usa <c>controller.applyOrderBy(orderBy)</c> — que ahora también acepta un <c>OrderBy[]</c> para una ordenación completa de varias columnas (el índice 0 ordena primero) — o <c>controller.toggleOrderBy(name, { additive })</c> para alternar una sola columna."
+      p1: "La ordenación por columna viene habilitada por defecto (<c>orderByEnabled: true</c>): hacer clic en el encabezado abre un menú con <i>Ascendente</i>, <i>Descendente</i> y — cuando la columna ya está ordenada — <i>Quitar ordenación</i>, que devuelve el grid a su estado neutro; los encabezados exponen <c>aria-sort</c>. En modo <c>remote</c>, la ordenación actual viaja en los <c>params</c>; en modo <c>dataset</c>, se resuelve en memoria.",
+      p2: "Desactívala por columna con <c>orderByEnabled: false</c> en la definición de la columna, y usa <c>filterName</c> como alias del campo enviado al servidor. Para aplicar una ordenación desde código, usa <c>controller.applyOrderBy({ name, direction })</c> — o pasa <c>null</c> para limpiarla. Para combinar varias columnas a la vez, mira <b>Ordenación multicolumna</b> justo debajo."
+    },
+    multiSort: {
+      title: "Ordenación multicolumna",
+      previewLabel: "componente real · Mayús+clic en un encabezado para apilar otra ordenación",
+      p1: "<b>Mayús+clic</b> en un encabezado añade esa columna a la ordenación actual en lugar de sustituirla — cada columna alterna entre <i>ascendente → descendente → quitada</i> mientras las demás permanecen en su sitio. Una pequeña insignia de prioridad (<c>1</c>, <c>2</c>, <c>3</c>…) junto a la flecha muestra el orden en que se aplican las columnas. La demo de abajo ya se monta ordenada por Área (ascendente) y luego Importe (descendente) — dentro de cada área, los importes van de mayor a menor; Mayús+clic en un tercer encabezado para apilar un nivel más.",
+      p2: "Desde código, <c>controller.applyOrderBy(orderBy)</c> también acepta un <c>OrderBy[]</c> para una ordenación completa de varias columnas (el índice 0 ordena primero), y <c>controller.toggleOrderBy(name, { additive: true })</c> reproduce el ciclo de Mayús+clic para una columna. En modo <c>remote</c>, una ordenación única conserva los params clásicos <c>order_by[field]</c> / <c>order_by[direction]</c>; a partir de dos columnas pasan a estar indexados — <c>order_by[0][field]</c>, <c>order_by[0][direction]</c>, <c>order_by[1][field]</c>, …"
     },
     checkbox: {
       title: "Selección múltiple",
@@ -283,8 +298,38 @@ export const es: Messages = {
           }
         },
         applyOrderBy: {
-          description: "Aplica la ordenación y vuelve a la página 1; pasar null quita la ordenación y devuelve el grid a su estado neutro.",
-          params: { orderBy: "un objeto { name: string; direction: 'asc' | 'desc' }, o null para limpiar." }
+          description: "Sustituye la ordenación completa y vuelve a la página 1: un OrderBy único mantiene el comportamiento clásico de una sola columna, un OrderBy[] aplica una ordenación multicolumna completa (el índice 0 ordena primero), y null limpia la ordenación.",
+          params: { orderBy: "un objeto { name: string; direction: 'asc' | 'desc' }, un OrderBy[] para una ordenación multicolumna, o null para limpiar." }
+        },
+        toggleOrderBy: {
+          description: "Alterna la ordenación de una columna exactamente como un clic en la cabecera y vuelve a la página 1; con additive: true reproduce el Mayús+clic, conservando las demás columnas ordenadas.",
+          params: {
+            name: "nombre de la columna cuya ordenación se alterna (asc → desc → eliminada).",
+            options: "additive: true conserva las demás columnas ordenadas; sin él, la columna pasa a ser la única ordenación."
+          }
+        },
+        setColumnOrder: {
+          description: "Sustituye por completo el orden efectivo de las columnas; un array vacío vuelve al orden natural de la config.",
+          params: { order: "lista de nombres de columna en el orden deseado; los nombres ausentes van al final." }
+        },
+        moveColumn: {
+          description: "Mueve una columna junto a otra, quedando antes (por defecto) o después del objetivo; un objetivo null la envía al final.",
+          params: {
+            name: "nombre de la columna a mover.",
+            targetName: "nombre de la columna de referencia, o null para enviar la columna al final.",
+            position: "si la columna queda antes (por defecto) o después del objetivo."
+          }
+        },
+        setColumnPinned: {
+          description: "Fija la columna a un borde (o la libera con null), sobrescribiendo el pinned de la config de la columna.",
+          params: {
+            name: "nombre de la columna a fijar.",
+            pinned: "'left', 'right' o null para liberar."
+          }
+        },
+        getColumnPin: {
+          description: "Devuelve la fijación actual de la columna ('left', 'right' o null): el override en runtime cuando existe; si no, el pinned de la config de la columna.",
+          params: { name: "nombre de la columna a consultar." }
         },
         expandRow: {
           description: "Expande la fila identificada, renderizando el área de detalles justo debajo de ella (requiere expandableRowsEnabled). Se ignora cuando la fila ya está expandida o no está en la página actual.",

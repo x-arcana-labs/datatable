@@ -22,6 +22,7 @@
     --arcana-pin-shadow: rgba(15, 23, 42, 0.20);
     --arcana-pin-border: #c4ccd3;
     --arcana-drop-indicator: #1467b8;
+    --arcana-drop-indicator-glow: rgba(20, 103, 184, 0.45);
     /* borders */
     --arcana-border: #dddddd;
     --arcana-border-strong: #bbbbbb;
@@ -1314,26 +1315,52 @@
    Column reorder (drag header) + pin/freeze (left/right)
    ----------------------------------------------------------------- */
 
-/* Dragged header cell + drop indicator (vertical line between columns). */
+/* Dragged header cell: translucent + tinted with the indicator color, so it
+   is obvious which column is in flight while the pointer moves. */
 .spark-grid .grid-header .grid-header-cell.arcana-col-dragging {
-    opacity: 0.55;
+    opacity: 0.5;
     cursor: grabbing;
+    background: var(--arcana-header-hover);
+    background: color-mix(in srgb, var(--arcana-drop-indicator, #1467b8) 18%, var(--arcana-surface-muted));
+    box-shadow: inset 0 0 0 1px var(--arcana-drop-indicator, #1467b8);
 }
 
+/* Drop indicator: a bold vertical accent line spanning the whole header,
+   with a soft glow so it reads on any theme… */
 .spark-grid .grid-header .grid-header-cell.arcana-drop-before::after,
 .spark-grid .grid-header .grid-header-cell.arcana-drop-after::after {
     content: "";
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 2px;
+    width: 3px;
+    border-radius: 2px;
     background: var(--arcana-drop-indicator, #1467b8);
-    z-index: 3;
+    box-shadow: 0 0 8px 2px var(--arcana-drop-indicator-glow, rgba(20, 103, 184, 0.45));
+    z-index: 7;
     pointer-events: none;
 }
 
-.spark-grid .grid-header .grid-header-cell.arcana-drop-before::after { left: -1px; }
-.spark-grid .grid-header .grid-header-cell.arcana-drop-after::after { right: -1px; }
+.spark-grid .grid-header .grid-header-cell.arcana-drop-before::after { left: -2px; }
+.spark-grid .grid-header .grid-header-cell.arcana-drop-after::after { right: -2px; }
+
+/* …plus a triangular cap at the top pointing at the exact insertion edge. */
+.spark-grid .grid-header .grid-header-cell.arcana-drop-before::before,
+.spark-grid .grid-header .grid-header-cell.arcana-drop-after::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 6px solid var(--arcana-drop-indicator, #1467b8);
+    z-index: 8;
+    pointer-events: none;
+}
+
+.spark-grid .grid-header .grid-header-cell.arcana-drop-before::before { left: -5px; }
+.spark-grid .grid-header .grid-header-cell.arcana-drop-after::before { right: -5px; }
 
 /* Pinned (frozen) cells stay opaque so scrolled content passes behind them. */
 .spark-grid .grid-cell.arcana-pin {
@@ -2077,6 +2104,8 @@
     --arcana-surface-muted: #dbe8f2;
     --arcana-summarizer-bg: #e3eef6;
     --arcana-status-bg: #f6fafc;
+    --arcana-drop-indicator: #0f5e79;
+    --arcana-drop-indicator-glow: rgba(15, 94, 121, 0.45);
     --arcana-border: #c7d9e5;
     --arcana-border-strong: #9fbdd0;
     --arcana-text: #123647;
@@ -2128,6 +2157,8 @@
     --arcana-surface-muted: #e0ecdf;
     --arcana-summarizer-bg: #e8f1e7;
     --arcana-status-bg: #f7fbf7;
+    --arcana-drop-indicator: #1d6f42;
+    --arcana-drop-indicator-glow: rgba(29, 111, 66, 0.45);
     --arcana-border: #ccdccb;
     --arcana-border-strong: #a9c4a8;
     --arcana-text: #1c3a2a;
@@ -2182,6 +2213,7 @@
     --arcana-pin-shadow: rgba(0, 0, 0, 0.55);
     --arcana-pin-border: #3b4d68;
     --arcana-drop-indicator: #7dd3fc;
+    --arcana-drop-indicator-glow: rgba(125, 211, 252, 0.65);
     --arcana-border: #2b3a52;
     --arcana-border-strong: #3b4d68;
     --arcana-text: #e2e8f0;

@@ -2,14 +2,15 @@ import { useMemo, type ReactNode } from "react";
 import { DocsShell, type DocsGroup } from "./components/DocsShell";
 import { CodeBlock } from "./components/CodeBlock";
 import {
-  ActionsPreview, CheckboxPreview, ColumnsPreview, DataModesPreview, ExpandablePreview, FiltersPreview,
-  FirstUsePreview, HooksPreview, LayoutPreview, LocalizationPreview, PaginationPreview, RadioPreview,
-  SearchTypesPreview, SortingPreview, SummaryPreview, ThemePreview
+  ActionsPreview, CheckboxPreview, ColumnManagementPreview, ColumnResizePreview, ColumnsPreview, DataModesPreview,
+  ExpandablePreview, FiltersPreview, FirstUsePreview, HooksPreview, LayoutPreview, LocalizationPreview,
+  MultiSortPreview, PaginationPreview, RadioPreview, SearchTypesPreview, SortingPreview, SummaryPreview, ThemePreview
 } from "./components/demos";
 import {
-  actionsCode, checkboxCode, columnManagementCode, columnsCode, controllerCode, expandableCode, filtersCode, firstUseCode,
-  fullConfigCode, hooksCode, installCode, layoutCode, localizationCode, modeCode, paginationCode, radioCode,
-  searchTypesCode, sortingCode, stylesCode, summaryCode, themeCode, type SnippetPair
+  actionsCode, checkboxCode, columnManagementCode, columnResizeCode, columnsCode, controllerCode, expandableCode,
+  filtersCode, firstUseCode, fullConfigCode, hooksCode, installCode, layoutCode, localizationCode, modeCode,
+  multiSortCode, paginationCode, radioCode, searchTypesCode, sortingCode, stylesCode, summaryCode, themeCode,
+  type SnippetPair
 } from "./components/snippets";
 import { rich, useLang, type Messages } from "./i18n";
 import { ARCANA_MESSAGES } from "../../src";
@@ -125,8 +126,37 @@ const METHOD_META: Array<{ key: MethodKey; signature: string; params?: Array<{ n
   },
   {
     key: "applyOrderBy",
-    signature: "applyOrderBy(orderBy: OrderBy | null): Promise<void>",
-    params: [{ name: "orderBy", type: "OrderBy | null" }]
+    signature: "applyOrderBy(orderBy: OrderBy | OrderBy[] | null): Promise<void>",
+    params: [{ name: "orderBy", type: "OrderBy | OrderBy[] | null" }]
+  },
+  {
+    key: "toggleOrderBy",
+    signature: "toggleOrderBy(name: string, options?: { additive?: boolean }): Promise<void>",
+    params: [{ name: "name", type: "string" }, { name: "options", type: "{ additive?: boolean }" }]
+  },
+  {
+    key: "setColumnOrder",
+    signature: "setColumnOrder(order: string[]): void",
+    params: [{ name: "order", type: "string[]" }]
+  },
+  {
+    key: "moveColumn",
+    signature: "moveColumn(name: string, targetName: string | null, position?: \"before\" | \"after\"): void",
+    params: [
+      { name: "name", type: "string" },
+      { name: "targetName", type: "string | null" },
+      { name: "position", type: "\"before\" | \"after\"" }
+    ]
+  },
+  {
+    key: "setColumnPinned",
+    signature: "setColumnPinned(name: string, pinned: \"left\" | \"right\" | null): void",
+    params: [{ name: "name", type: "string" }, { name: "pinned", type: "\"left\" | \"right\" | null" }]
+  },
+  {
+    key: "getColumnPin",
+    signature: "getColumnPin(name: string): \"left\" | \"right\" | null",
+    params: [{ name: "name", type: "string" }]
   },
   { key: "expandRow", signature: "expandRow(uuid: string): void", params: [{ name: "uuid", type: "string" }] },
   { key: "collapseRow", signature: "collapseRow(uuid: string): void", params: [{ name: "uuid", type: "string" }] },
@@ -268,7 +298,7 @@ function buildGroups(msg: Messages, gridLocale: ArcanaLocale): DocsGroup[] {
           body: <>
             <P>{s.columns.p1}</P>
             <P>{s.columns.p2}</P>
-            {chips(["columns", "cellMinWidth", "calculateCellWidth", "textAlignment", "width", "resizable", "valueGetter", "headerContentGetter", "html", "isVisible", "onBeforeColumnStyleMounted", "useFlexbox (deprecated)"])}
+            {chips(["columns", "cellMinWidth", "calculateCellWidth", "textAlignment", "width", "valueGetter", "headerContentGetter", "html", "isVisible", "onBeforeColumnStyleMounted", "useFlexbox (deprecated)"])}
           </>
         },
         {
@@ -327,13 +357,39 @@ function buildGroups(msg: Messages, gridLocale: ArcanaLocale): DocsGroup[] {
           </>
         },
         {
+          id: "ordenacao-multipla",
+          title: s.multiSort.title,
+          code: pairToCode(multiSortCode, "MultiSort.tsx", "MultiSort.vue", "MultiSort.component.ts", "MultiSort.svelte"),
+          preview: <MultiSortPreview />,
+          previewLabel: s.multiSort.previewLabel,
+          body: <>
+            <P>{s.multiSort.p1}</P>
+            <P>{s.multiSort.p2}</P>
+            {chips(["applyOrderBy", "toggleOrderBy", "OrderBy[]", "order_by[0][field]"])}
+          </>
+        },
+        {
           id: "gerenciar-colunas",
           title: s.columnManagement.title,
           code: pairToCode(columnManagementCode, "ColumnManagement.tsx", "ColumnManagement.vue", "ColumnManagement.component.ts", "ColumnManagement.svelte"),
+          preview: <ColumnManagementPreview />,
+          previewLabel: s.columnManagement.previewLabel,
           body: <>
             <P>{s.columnManagement.p1}</P>
             <P>{s.columnManagement.p2}</P>
             {chips(["columnReorderEnabled", "reorderable", "columnPinEnabled", "pinned"])}
+          </>
+        },
+        {
+          id: "redimensionar",
+          title: s.resize.title,
+          code: pairToCode(columnResizeCode, "ColumnResize.tsx", "ColumnResize.vue", "ColumnResize.component.ts", "ColumnResize.svelte"),
+          preview: <ColumnResizePreview />,
+          previewLabel: s.resize.previewLabel,
+          body: <>
+            <P>{s.resize.p1}</P>
+            <P>{s.resize.p2}</P>
+            {chips(["columnResizeEnabled", "resizable (column)", "cellMinWidth"])}
           </>
         },
         {
@@ -381,7 +437,7 @@ function buildGroups(msg: Messages, gridLocale: ArcanaLocale): DocsGroup[] {
               <li>{rich(s.layout.liVertical)}</li>
             </ul>
             <P>{s.layout.p2}</P>
-            {chips(["height", "overflowEnabled", "stickyHeaderEnabled", "columnResizeEnabled", "responsiveMode", "cellMinWidth"])}
+            {chips(["height", "overflowEnabled", "stickyHeaderEnabled", "responsiveMode", "cellMinWidth"])}
           </>
         },
         {

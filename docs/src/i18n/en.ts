@@ -99,12 +99,21 @@ export const en: Messages = {
     columns: {
       title: "Columns",
       p1: "Each column is a <c>DataTableColumn</c> object with a <c>name</c> (the key on the row) and a <c>label</c> (the header text). Fields like <c>type</c> control formatting — for example, <c>CURRENCY</c> renders monetary values — and <c>valueGetter</c> transforms the cell content before rendering. String content renders as safe, escaped text by default; set <c>html: true</c> on the column to interpret it as HTML, or return a native node for rich content.",
-      p2: "The <c>columns</c> property also accepts a <c>() => DataTableColumn[]</c> function, handy when the columns depend on permissions or on application state. Columns can be resized by dragging the right edge of their header — on by default (<c>columnResizeEnabled</c>); opt a single column out with <c>resizable: false</c>."
+      p2: "The <c>columns</c> property also accepts a <c>() => DataTableColumn[]</c> function, handy when the columns depend on permissions or on application state."
     },
     columnManagement: {
       title: "Reorder and pin columns",
+      previewLabel: "real component · drag the headers and scroll horizontally",
       p1: "Drag a header cell sideways to reorder the columns — a drop indicator line shows exactly where the column will land. A short click still opens the sort menu and the right-edge resize handle keeps priority, so dragging never gets in the way. It is on by default (<c>columnReorderEnabled</c>); keep a single column locked in place with <c>reorderable: false</c>.",
       p2: "The header menu (the same one that carries the sort options) gains <i>Pin to left</i>, <i>Pin to right</i> and <i>Unpin</i>. A pinned column freezes to its edge and stays visible during horizontal scroll — pinned-left columns stick to the start, pinned-right to the end, with a subtle divider/shadow. Set it up front with <c>pinned: 'left'</c> or <c>pinned: 'right'</c> on the column, or change it at runtime from the menu; the system columns (checkbox/expander) freeze on the left and the actions column on the right. Both reorder and pin are disabled by <c>columnPinEnabled</c> and ignored in <c>VERTICAL_RECORD</c> responsive mode."
+    },
+    resize: {
+      title: "Resize columns",
+      previewLabel: "real component · drag the right edge of a header",
+      labelOn: "resize ON",
+      labelOff: "resize OFF",
+      p1: "Every header carries a discreet handle on its right edge — drag it to give the column exactly the width you want. Resizing is on by default (<c>columnResizeEnabled: true</c>) and the handle keeps priority over the header drag, so it never conflicts with reordering.",
+      p2: "<c>cellMinWidth</c> acts as the floor: no column can be dragged narrower than it. Turn the handles off for the whole grid with <c>columnResizeEnabled: false</c>, or keep a single column at a fixed width with <c>resizable: false</c> in its definition. Compare the two grids below — the first shows a resize handle on every header, the second shows none:"
     },
     pagination: {
       title: "Pagination",
@@ -133,8 +142,14 @@ export const en: Messages = {
     },
     sorting: {
       title: "Sorting",
-      p1: "Per-column sorting is enabled by default (<c>orderByEnabled: true</c>): clicking the header opens a menu with <i>Ascending</i>, <i>Descending</i> and — when the column is already sorted — <i>Remove sorting</i>, which returns the grid to its neutral state. <b>Shift+click</b> a header instead to add that column to a <i>multi-column</i> sort, cycling it <i>ascending → descending → removed</i> while keeping the other sorted columns; a small priority badge (<c>1</c>, <c>2</c>, <c>3</c>…) shows the sort order, and headers expose <c>aria-sort</c>. In <c>remote</c> mode, the current sorting travels along in the <c>params</c>; in <c>dataset</c> mode, it is resolved in memory.",
-      p2: "Disable it per column with <c>orderByEnabled: false</c> on the column definition, and use <c>filterName</c> as an alias for the field sent to the server. To apply a sort from code, use <c>controller.applyOrderBy(orderBy)</c> — which now also accepts an <c>OrderBy[]</c> for a full multi-column order (index 0 sorts first) — or <c>controller.toggleOrderBy(name, { additive })</c> to flip a single column."
+      p1: "Per-column sorting is enabled by default (<c>orderByEnabled: true</c>): clicking the header opens a menu with <i>Ascending</i>, <i>Descending</i> and — when the column is already sorted — <i>Remove sorting</i>, which returns the grid to its neutral state; headers expose <c>aria-sort</c>. In <c>remote</c> mode, the current sorting travels along in the <c>params</c>; in <c>dataset</c> mode, it is resolved in memory.",
+      p2: "Disable it per column with <c>orderByEnabled: false</c> on the column definition, and use <c>filterName</c> as an alias for the field sent to the server. To apply a sort from code, use <c>controller.applyOrderBy({ name, direction })</c> — or pass <c>null</c> to clear it. To combine several columns at once, see <b>Multi-column sorting</b> right below."
+    },
+    multiSort: {
+      title: "Multi-column sorting",
+      previewLabel: "real component · Shift+click a header to stack another sort",
+      p1: "<b>Shift+click</b> a header to add that column to the current sort instead of replacing it — each column cycles <i>ascending → descending → removed</i> while the others stay in place. A small priority badge (<c>1</c>, <c>2</c>, <c>3</c>…) next to the arrow shows the order in which the columns apply. The demo below already mounts sorted by Area (ascending) and then Amount (descending) — inside each area, the amounts run from highest to lowest; Shift+click a third header to stack one more level.",
+      p2: "From code, <c>controller.applyOrderBy(orderBy)</c> also accepts an <c>OrderBy[]</c> for a full multi-column order (index 0 sorts first), and <c>controller.toggleOrderBy(name, { additive: true })</c> reproduces the Shift+click cycle for one column. In <c>remote</c> mode, a single sort keeps the classic <c>order_by[field]</c> / <c>order_by[direction]</c> params; from two columns on they become indexed — <c>order_by[0][field]</c>, <c>order_by[0][direction]</c>, <c>order_by[1][field]</c>, …"
     },
     checkbox: {
       title: "Multiple selection",
@@ -283,8 +298,38 @@ export const en: Messages = {
           }
         },
         applyOrderBy: {
-          description: "Applies the sorting and goes back to page 1; passing null removes the sorting and returns the grid to its neutral state.",
-          params: { orderBy: "a { name: string; direction: 'asc' | 'desc' } object, or null to clear." }
+          description: "Replaces the whole sort and goes back to page 1: a single OrderBy keeps the classic single-column behavior, an OrderBy[] applies a full multi-column order (index 0 sorts first), and null clears the sorting.",
+          params: { orderBy: "a { name: string; direction: 'asc' | 'desc' } object, an OrderBy[] for a multi-column sort, or null to clear." }
+        },
+        toggleOrderBy: {
+          description: "Cycles one column's sort exactly like a header click and goes back to page 1; with additive: true it reproduces Shift+click, keeping the other sorted columns.",
+          params: {
+            name: "name of the column whose sort is cycled (asc → desc → removed).",
+            options: "additive: true keeps the other sorted columns; without it, the column becomes the sole sort."
+          }
+        },
+        setColumnOrder: {
+          description: "Replaces the whole effective column order; an empty array goes back to the natural config order.",
+          params: { order: "list of column names in the desired order; names left out are sent to the end." }
+        },
+        moveColumn: {
+          description: "Moves a column next to another one, landing before (default) or after the target; a null target sends it to the end.",
+          params: {
+            name: "name of the column to move.",
+            targetName: "name of the reference column, or null to send the column to the end.",
+            position: "whether the column lands before (default) or after the target."
+          }
+        },
+        setColumnPinned: {
+          description: "Pins the column to an edge (or unpins it with null), overriding the pinned value from the column config.",
+          params: {
+            name: "name of the column to pin.",
+            pinned: "'left', 'right', or null to unpin."
+          }
+        },
+        getColumnPin: {
+          description: "Returns the column's current pin ('left', 'right' or null): the runtime override when set, otherwise the column's pinned config.",
+          params: { name: "name of the column to inspect." }
         },
         expandRow: {
           description: "Expands the identified row, rendering the details area right below it (requires expandableRowsEnabled). Ignored when the row is already expanded or is not on the current page.",

@@ -99,12 +99,21 @@ export const pt: Messages = {
     columns: {
       title: "Colunas",
       p1: "Cada coluna é um objeto <c>DataTableColumn</c> com um <c>name</c> (a chave na linha) e um <c>label</c> (o texto do cabeçalho). Campos como <c>type</c> controlam a formatação — por exemplo, <c>CURRENCY</c> renderiza valores monetários — e <c>valueGetter</c> transforma o conteúdo da célula antes de renderizar. O conteúdo string é renderizado como texto seguro e escapado por padrão; defina <c>html: true</c> na coluna para interpretá-lo como HTML, ou retorne um nó nativo para conteúdo rico.",
-      p2: "A propriedade <c>columns</c> também aceita uma função <c>() => DataTableColumn[]</c>, útil quando as colunas dependem de permissões ou de estado da aplicação. As colunas podem ser redimensionadas arrastando a borda direita do cabeçalho — ativo por padrão (<c>columnResizeEnabled</c>); desative em uma coluna específica com <c>resizable: false</c>."
+      p2: "A propriedade <c>columns</c> também aceita uma função <c>() => DataTableColumn[]</c>, útil quando as colunas dependem de permissões ou de estado da aplicação."
     },
     columnManagement: {
       title: "Reordenar e fixar colunas",
+      previewLabel: "componente real · arraste os cabeçalhos e role horizontalmente",
       p1: "Arraste o corpo de um cabeçalho para o lado para reordenar as colunas — uma linha indicadora mostra exatamente onde a coluna vai parar. Um clique curto continua abrindo o menu de ordenação e a alça de redimensionar da borda direita mantém a prioridade, então arrastar nunca atrapalha. Ativo por padrão (<c>columnReorderEnabled</c>); mantenha uma coluna fixa no lugar com <c>reorderable: false</c>.",
       p2: "O menu do cabeçalho (o mesmo que traz as opções de ordenação) ganha <i>Fixar à esquerda</i>, <i>Fixar à direita</i> e <i>Desafixar</i>. Uma coluna fixada congela na sua borda e permanece visível durante a rolagem horizontal — colunas fixadas à esquerda grudam no início, à direita no fim, com um divisor/sombra sutil. Defina de antemão com <c>pinned: 'left'</c> ou <c>pinned: 'right'</c> na coluna, ou altere em tempo de execução pelo menu; as colunas de sistema (checkbox/expansor) congelam à esquerda e a coluna de ações à direita. Reordenar e fixar são desativados por <c>columnPinEnabled</c> e ignorados no modo responsivo <c>VERTICAL_RECORD</c>."
+    },
+    resize: {
+      title: "Redimensionar colunas",
+      previewLabel: "componente real · arraste a borda direita de um cabeçalho",
+      labelOn: "resize LIGADO",
+      labelOff: "resize DESLIGADO",
+      p1: "Todo cabeçalho traz uma alça discreta na borda direita — arraste-a para dar à coluna exatamente a largura que você quiser. O redimensionamento vem ativo por padrão (<c>columnResizeEnabled: true</c>) e a alça mantém prioridade sobre o arrasto do cabeçalho, então nunca conflita com a reordenação.",
+      p2: "<c>cellMinWidth</c> funciona como piso: nenhuma coluna pode ser arrastada para menos que ele. Desligue as alças do grid inteiro com <c>columnResizeEnabled: false</c>, ou mantenha uma coluna específica com largura fixa usando <c>resizable: false</c> na definição dela. Compare os dois grids abaixo — o primeiro mostra a alça de redimensionar em todos os cabeçalhos, o segundo em nenhum:"
     },
     pagination: {
       title: "Paginação",
@@ -133,8 +142,14 @@ export const pt: Messages = {
     },
     sorting: {
       title: "Ordenação",
-      p1: "A ordenação por coluna vem habilitada por padrão (<c>orderByEnabled: true</c>): clicar no cabeçalho abre um menu com <i>Crescente</i>, <i>Decrescente</i> e — quando a coluna já está ordenada — <i>Remover ordem</i>, que devolve o grid ao estado neutro. <b>Shift+clique</b> em um cabeçalho para adicionar essa coluna a uma ordenação de <i>múltiplas colunas</i>, alternando-a entre <i>crescente → decrescente → removida</i> enquanto mantém as demais colunas ordenadas; um pequeno número de prioridade (<c>1</c>, <c>2</c>, <c>3</c>…) indica a ordem, e os cabeçalhos expõem <c>aria-sort</c>. No modo <c>remote</c>, a ordenação atual segue junto nos <c>params</c>; no modo <c>dataset</c>, é resolvida em memória.",
-      p2: "Desative-a por coluna com <c>orderByEnabled: false</c> na definição da coluna, e use <c>filterName</c> como alias do campo enviado ao servidor. Para aplicar uma ordenação por código, use <c>controller.applyOrderBy(orderBy)</c> — que agora também aceita um <c>OrderBy[]</c> para uma ordenação completa de múltiplas colunas (o índice 0 ordena primeiro) — ou <c>controller.toggleOrderBy(name, { additive })</c> para alternar uma única coluna."
+      p1: "A ordenação por coluna vem habilitada por padrão (<c>orderByEnabled: true</c>): clicar no cabeçalho abre um menu com <i>Crescente</i>, <i>Decrescente</i> e — quando a coluna já está ordenada — <i>Remover ordem</i>, que devolve o grid ao estado neutro; os cabeçalhos expõem <c>aria-sort</c>. No modo <c>remote</c>, a ordenação atual segue junto nos <c>params</c>; no modo <c>dataset</c>, é resolvida em memória.",
+      p2: "Desative-a por coluna com <c>orderByEnabled: false</c> na definição da coluna, e use <c>filterName</c> como alias do campo enviado ao servidor. Para aplicar uma ordenação por código, use <c>controller.applyOrderBy({ name, direction })</c> — ou passe <c>null</c> para limpá-la. Para combinar várias colunas de uma vez, veja <b>Ordenação multi-coluna</b> logo abaixo."
+    },
+    multiSort: {
+      title: "Ordenação multi-coluna",
+      previewLabel: "componente real · Shift+clique em um cabeçalho para empilhar outra ordem",
+      p1: "<b>Shift+clique</b> em um cabeçalho para adicionar essa coluna à ordenação atual em vez de substituí-la — cada coluna alterna entre <i>crescente → decrescente → removida</i> enquanto as demais ficam no lugar. Um pequeno selo de prioridade (<c>1</c>, <c>2</c>, <c>3</c>…) ao lado da seta mostra a ordem em que as colunas se aplicam. A demo abaixo já monta ordenada por Área (crescente) e depois Valor (decrescente) — dentro de cada área, os valores vão do maior para o menor; Shift+clique em um terceiro cabeçalho para empilhar mais um nível.",
+      p2: "Por código, <c>controller.applyOrderBy(orderBy)</c> também aceita um <c>OrderBy[]</c> para uma ordenação completa de múltiplas colunas (o índice 0 ordena primeiro), e <c>controller.toggleOrderBy(name, { additive: true })</c> reproduz o ciclo do Shift+clique para uma coluna. No modo <c>remote</c>, uma ordenação única mantém os params clássicos <c>order_by[field]</c> / <c>order_by[direction]</c>; a partir de duas colunas eles passam a ser indexados — <c>order_by[0][field]</c>, <c>order_by[0][direction]</c>, <c>order_by[1][field]</c>, …"
     },
     checkbox: {
       title: "Seleção múltipla",
@@ -283,8 +298,38 @@ export const pt: Messages = {
           }
         },
         applyOrderBy: {
-          description: "Aplica a ordenação e volta para a página 1; passar null remove a ordenação e devolve o grid ao estado neutro.",
-          params: { orderBy: "objeto { name: string; direction: 'asc' | 'desc' }, ou null para limpar." }
+          description: "Substitui a ordenação inteira e volta para a página 1: um OrderBy único mantém o comportamento clássico de coluna única, um OrderBy[] aplica uma ordenação multi-coluna completa (o índice 0 ordena primeiro), e null limpa a ordenação.",
+          params: { orderBy: "objeto { name: string; direction: 'asc' | 'desc' }, um OrderBy[] para ordenação multi-coluna, ou null para limpar." }
+        },
+        toggleOrderBy: {
+          description: "Alterna a ordenação de uma coluna exatamente como um clique no cabeçalho e volta para a página 1; com additive: true reproduz o Shift+clique, mantendo as demais colunas ordenadas.",
+          params: {
+            name: "nome da coluna cuja ordenação é alternada (asc → desc → removida).",
+            options: "additive: true mantém as demais colunas ordenadas; sem ele, a coluna vira a única ordenação."
+          }
+        },
+        setColumnOrder: {
+          description: "Substitui por inteiro a ordem efetiva das colunas; um array vazio volta à ordem natural da config.",
+          params: { order: "lista de nomes de coluna na ordem desejada; nomes ausentes vão para o fim." }
+        },
+        moveColumn: {
+          description: "Move uma coluna para junto de outra, ficando antes (padrão) ou depois do alvo; um alvo null a envia para o fim.",
+          params: {
+            name: "nome da coluna a mover.",
+            targetName: "nome da coluna de referência, ou null para enviar a coluna ao fim.",
+            position: "se a coluna fica antes (padrão) ou depois do alvo."
+          }
+        },
+        setColumnPinned: {
+          description: "Fixa a coluna em uma borda (ou a solta com null), sobrescrevendo o pinned da config da coluna.",
+          params: {
+            name: "nome da coluna a fixar.",
+            pinned: "'left', 'right' ou null para soltar."
+          }
+        },
+        getColumnPin: {
+          description: "Retorna a fixação atual da coluna ('left', 'right' ou null): o override de runtime quando existe, senão o pinned da config da coluna.",
+          params: { name: "nome da coluna a consultar." }
         },
         expandRow: {
           description: "Expande a linha identificada, renderizando a área de detalhes logo abaixo dela (requer expandableRowsEnabled). Ignorada quando a linha já está expandida ou não está na página atual.",

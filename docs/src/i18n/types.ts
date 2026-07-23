@@ -59,6 +59,11 @@ export type MethodKey =
   | "setFilters"
   | "paginate"
   | "applyOrderBy"
+  | "toggleOrderBy"
+  | "setColumnOrder"
+  | "moveColumn"
+  | "setColumnPinned"
+  | "getColumnPin"
   | "expandRow"
   | "collapseRow"
   | "getExpandedRows"
@@ -175,7 +180,17 @@ export interface Messages {
       keysKeyCol: string;
     };
     columns: SectionProse;
-    columnManagement: SectionProse;
+    columnManagement: SectionProse & { previewLabel: string };
+    resize: {
+      title: string;
+      previewLabel: string;
+      /** Label above the grid with resizing enabled (dual preview). */
+      labelOn: string;
+      /** Label above the grid with resizing disabled (dual preview). */
+      labelOff: string;
+      p1: string;
+      p2: string;
+    };
     pagination: SectionProse;
     filters: SectionProse;
     searchTypes: {
@@ -186,6 +201,7 @@ export interface Messages {
       p2: string;
     };
     sorting: SectionProse;
+    multiSort: SectionProse & { previewLabel: string };
     checkbox: SectionProse;
     radio: SectionProse;
     summary: SectionProse;

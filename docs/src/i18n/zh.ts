@@ -99,12 +99,21 @@ export const zh: Messages = {
     columns: {
       title: "列",
       p1: "每一列都是一个 <c>DataTableColumn</c> 对象，包含 <c>name</c>（行数据上的键）和 <c>label</c>（表头文本）。像 <c>type</c> 这样的字段控制格式化——例如 <c>CURRENCY</c> 会渲染货币值——而 <c>valueGetter</c> 在渲染前转换单元格内容。字符串内容默认作为安全的转义文本渲染；在列上设置 <c>html: true</c> 可将其解析为 HTML，或返回原生节点以呈现富内容。",
-      p2: "<c>columns</c> 属性也接受一个 <c>() => DataTableColumn[]</c> 函数，当列依赖于权限或应用状态时非常方便。可以通过拖动表头右边缘来调整列宽——默认启用（<c>columnResizeEnabled</c>）；用 <c>resizable: false</c> 可让某一列不参与调整。"
+      p2: "<c>columns</c> 属性也接受一个 <c>() => DataTableColumn[]</c> 函数，当列依赖于权限或应用状态时非常方便。"
     },
     columnManagement: {
       title: "重新排序和固定列",
+      previewLabel: "真实组件 · 拖动表头并横向滚动",
       p1: "横向拖动表头主体即可重新排序列——一条放置指示线会显示列最终落在何处。短按仍会打开排序菜单，右边缘的调整宽度手柄依然优先，因此拖动绝不会碍事。默认启用（<c>columnReorderEnabled</c>）；用 <c>reorderable: false</c> 可让某一列固定不动。",
       p2: "表头菜单（与排序选项相同的那个菜单）新增了<i>固定到左侧</i>、<i>固定到右侧</i>和<i>取消固定</i>。被固定的列会冻结在其边缘，并在横向滚动时保持可见——固定到左侧的列贴在开头，固定到右侧的列贴在末尾，并带有淡淡的分隔线／阴影。可以在列上预先设置 <c>pinned: 'left'</c> 或 <c>pinned: 'right'</c>，也可以通过菜单在运行时更改；系统列（复选框／展开器）冻结在左侧，操作列冻结在右侧。重新排序和固定都由 <c>columnPinEnabled</c> 关闭，并在 <c>VERTICAL_RECORD</c> 响应式模式下被忽略。"
+    },
+    resize: {
+      title: "调整列宽",
+      previewLabel: "真实组件 · 拖动表头的右边缘",
+      labelOn: "调整宽度 开",
+      labelOff: "调整宽度 关",
+      p1: "每个表头的右边缘都有一个不起眼的手柄——拖动它即可把列调整到你想要的宽度。列宽调整默认启用（<c>columnResizeEnabled: true</c>），并且手柄的优先级高于表头拖动，因此绝不会与重新排序发生冲突。",
+      p2: "<c>cellMinWidth</c> 是宽度下限：任何列都无法被拖得比它更窄。用 <c>columnResizeEnabled: false</c> 可关闭整个表格的手柄，或在某列的定义中设置 <c>resizable: false</c> 让它保持固定宽度。对比下面两个表格——第一个的每个表头都有调整手柄，第二个则完全没有："
     },
     pagination: {
       title: "分页",
@@ -133,8 +142,14 @@ export const zh: Messages = {
     },
     sorting: {
       title: "排序",
-      p1: "按列排序默认启用（<c>orderByEnabled: true</c>）：点击表头会打开一个菜单，包含<i>升序</i>、<i>降序</i>，以及——当该列已排序时——<i>取消排序</i>，后者将表格恢复到中性状态。<b>Shift+点击</b>表头可将该列加入<i>多列排序</i>，在保留其他已排序列的同时，让该列在<i>升序 → 降序 → 移除</i>之间循环；一个小的优先级序号（<c>1</c>、<c>2</c>、<c>3</c>…）指示排序顺序，表头还会暴露 <c>aria-sort</c>。在 <c>remote</c> 模式下，当前排序会随 <c>params</c> 一起发送；在 <c>dataset</c> 模式下，则在内存中完成。",
-      p2: "在列定义上用 <c>orderByEnabled: false</c> 可按列禁用排序，并可用 <c>filterName</c> 作为发送到服务端的字段别名。如需通过代码应用排序，使用 <c>controller.applyOrderBy(orderBy)</c>——它现在也接受 <c>OrderBy[]</c> 以表示完整的多列排序（索引 0 最先排序）——或使用 <c>controller.toggleOrderBy(name, { additive })</c> 来切换单个列。"
+      p1: "按列排序默认启用（<c>orderByEnabled: true</c>）：点击表头会打开一个菜单，包含<i>升序</i>、<i>降序</i>，以及——当该列已排序时——<i>取消排序</i>，后者将表格恢复到中性状态；表头还会暴露 <c>aria-sort</c>。在 <c>remote</c> 模式下，当前排序会随 <c>params</c> 一起发送；在 <c>dataset</c> 模式下，则在内存中完成。",
+      p2: "在列定义上用 <c>orderByEnabled: false</c> 可按列禁用排序，并可用 <c>filterName</c> 作为发送到服务端的字段别名。如需通过代码应用排序，使用 <c>controller.applyOrderBy({ name, direction })</c>——或传入 <c>null</c> 清除排序。要同时组合多个列，请看下面紧接着的<b>多列排序</b>。"
+    },
+    multiSort: {
+      title: "多列排序",
+      previewLabel: "真实组件 · Shift+点击表头以叠加另一层排序",
+      p1: "<b>Shift+点击</b>表头会把该列加入当前排序而不是替换它——每一列都在<i>升序 → 降序 → 移除</i>之间循环，其余列保持不动。箭头旁边的小优先级徽标（<c>1</c>、<c>2</c>、<c>3</c>…）显示各列的生效顺序。下面的演示挂载时就已按「区域」（升序）再按「金额」（降序）排序——在每个区域内部，金额从高到低排列；Shift+点击第三个表头即可再叠加一层。",
+      p2: "在代码中，<c>controller.applyOrderBy(orderBy)</c> 也接受 <c>OrderBy[]</c> 来表示完整的多列排序（索引 0 最先排序），而 <c>controller.toggleOrderBy(name, { additive: true })</c> 则为单个列重现 Shift+点击的循环。在 <c>remote</c> 模式下，单列排序保持经典的 <c>order_by[field]</c> / <c>order_by[direction]</c> 参数；从两列开始，参数改为带索引的形式——<c>order_by[0][field]</c>、<c>order_by[0][direction]</c>、<c>order_by[1][field]</c>……"
     },
     checkbox: {
       title: "多选",
@@ -283,8 +298,38 @@ export const zh: Messages = {
           }
         },
         applyOrderBy: {
-          description: "应用排序并回到第 1 页；传入 null 会移除排序，将表格恢复到中性状态。",
-          params: { orderBy: "一个 { name: string; direction: 'asc' | 'desc' } 对象，或传 null 以清除。" }
+          description: "整体替换排序并回到第 1 页：单个 OrderBy 保持经典的单列行为，OrderBy[] 应用完整的多列排序（索引 0 最先排序），传入 null 则清除排序。",
+          params: { orderBy: "一个 { name: string; direction: 'asc' | 'desc' } 对象、用于多列排序的 OrderBy[]，或传 null 以清除。" }
+        },
+        toggleOrderBy: {
+          description: "像点击表头一样循环单个列的排序并回到第 1 页；配合 additive: true 可重现 Shift+点击，保留其他已排序的列。",
+          params: {
+            name: "要循环排序的列名（asc → desc → 移除）。",
+            options: "additive: true 会保留其他已排序的列；不传时该列成为唯一排序。"
+          }
+        },
+        setColumnOrder: {
+          description: "整体替换列的有效顺序；空数组恢复配置中的自然顺序。",
+          params: { order: "按期望顺序排列的列名列表；未列出的列名会排到末尾。" }
+        },
+        moveColumn: {
+          description: "把一列移到另一列旁边，落在目标之前（默认）或之后；目标为 null 时移到末尾。",
+          params: {
+            name: "要移动的列名。",
+            targetName: "参照列的列名，传 null 则把该列移到末尾。",
+            position: "该列落在目标之前（默认）还是之后。"
+          }
+        },
+        setColumnPinned: {
+          description: "把列固定到某一侧（或传 null 取消固定），覆盖列配置中的 pinned。",
+          params: {
+            name: "要固定的列名。",
+            pinned: "'left'、'right'，或传 null 取消固定。"
+          }
+        },
+        getColumnPin: {
+          description: "返回列当前的固定状态（'left'、'right' 或 null）：有运行时覆盖时返回覆盖值，否则返回列配置中的 pinned。",
+          params: { name: "要查询的列名。" }
         },
         expandRow: {
           description: "展开指定行，在其正下方渲染详情区域（需要 expandableRowsEnabled）。当该行已展开或不在当前页时会被忽略。",

@@ -228,6 +228,62 @@ export function SortingPreview() {
   return <ArcanaDataTable key={locale} config={config} />;
 }
 
+export function MultiSortPreview() {
+  const { msg, rows, locale, gridLocale } = useDemo();
+  const config = useMemo<DataTableConfig<DemoRow>>(() => ({
+    mode: "dataset", locale: gridLocale, dataset: rows, rowsPerPage: 8, searchEnabled: false, footerVisible: false,
+    columns: [
+      { name: "name", label: msg.demos.cols.name },
+      { name: "department", label: msg.demos.cols.area },
+      { name: "amount", label: msg.demos.cols.amount, type: "CURRENCY", textAlignment: "right", valueGetter: (value) => currency(value, locale) }
+    ]
+  }), [msg, rows, locale]);
+  // Mounts with a 2-column sort already applied so the priority badges (1, 2)
+  // are visible right away; Shift+click a header to stack a third level.
+  return <ArcanaDataTable
+    key={locale}
+    config={config}
+    onMounted={(grid) => { void grid.applyOrderBy([{ name: "department", direction: "asc" }, { name: "amount", direction: "desc" }]); }}
+  />;
+}
+
+export function ColumnManagementPreview() {
+  const { msg, rows, locale, gridLocale } = useDemo();
+  const config = useMemo<DataTableConfig<DemoRow>>(() => ({
+    // Wide, fixed-width columns force horizontal scroll, making the pinned
+    // (sticky) edges obvious; drag a header body to reorder.
+    mode: "dataset", locale: gridLocale, dataset: rows.slice(0, 5), searchEnabled: false, footerVisible: false,
+    columnReorderEnabled: true,
+    columns: [
+      { name: "id", label: msg.demos.cols.id, width: 70, pinned: "left" },
+      { name: "name", label: msg.demos.cols.name, width: 170 },
+      { name: "email", label: msg.demos.cols.email, width: 220 },
+      { name: "department", label: msg.demos.cols.area, width: 150 },
+      { name: "status", label: msg.demos.cols.status, width: 130 },
+      { name: "joinedAt", label: msg.demos.cols.date, width: 140 },
+      { name: "amount", label: msg.demos.cols.amount, type: "CURRENCY", textAlignment: "right", width: 140, pinned: "right", valueGetter: (value) => currency(value, locale) }
+    ]
+  }), [msg, rows, locale]);
+  return <ArcanaDataTable key={locale} config={config} />;
+}
+
+export function ColumnResizePreview() {
+  const { msg, rows, locale, gridLocale } = useDemo();
+  const basicColumns = useMemo(() => makeBasicColumns(msg), [msg]);
+  const resizeOn = useMemo<DataTableConfig<DemoRow>>(() => ({
+    mode: "dataset", locale: gridLocale, dataset: rows.slice(0, 4), searchEnabled: false, footerVisible: false,
+    columnResizeEnabled: true, cellMinWidth: 90, columns: basicColumns
+  }), [basicColumns, rows]);
+  const resizeOff = useMemo<DataTableConfig<DemoRow>>(() => ({
+    mode: "dataset", locale: gridLocale, dataset: rows.slice(0, 4), searchEnabled: false, footerVisible: false,
+    columnResizeEnabled: false, columns: basicColumns
+  }), [basicColumns, rows]);
+  return <div className="dual-preview">
+    <div><div className="preview-label">{msg.sections.resize.labelOn} <span>columnResizeEnabled: true</span></div><ArcanaDataTable key={locale} config={resizeOn} /></div>
+    <div><div className="preview-label">{msg.sections.resize.labelOff} <span>columnResizeEnabled: false</span></div><ArcanaDataTable key={`${locale}-off`} config={resizeOff} /></div>
+  </div>;
+}
+
 export function CheckboxPreview() {
   const { msg, rows, locale, gridLocale } = useDemo();
   const [event, setEvent] = useState<string | null>(null);
