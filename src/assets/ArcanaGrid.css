@@ -875,6 +875,23 @@
     cursor: pointer;
 }
 
+/* O rótulo ocupa o espaço livre e empurra o ícone de ordenação para o fim
+   (alinhado à direita), independente da largura da coluna ou do alinhamento.
+   O text-align preserva o alinhamento da coluna dentro do rótulo. */
+.arcana-grid .grid-header .grid-header-cell.grid-header-order > :first-child {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+.arcana-grid .grid-header .grid-header-cell.grid-header-order.grid-cell-right-alignment > :first-child {
+    text-align: right;
+}
+.arcana-grid .grid-header .grid-header-cell.grid-header-order.grid-cell-center-alignment > :first-child {
+    text-align: center;
+}
+.arcana-grid .grid-header .grid-header-cell .arcana-sort {
+    flex: 0 0 auto;
+}
+
 .arcana-grid .grid-header .grid-header-cell.grid-header-order:hover {
     background: var(--arcana-header-hover);
 }
